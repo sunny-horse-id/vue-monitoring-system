@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <div></div>
+  <div class="">
+    666
+  </div>
 </template>
 
 <style scoped>

@@ -11,4 +11,7 @@ module.exports = {
   rules: {
     'vue/multi-word-component-names': 0,  //不再要求组件命名
   },
+  env: {
+    node: true // 只需将该项设置为 true 即可
+  },
 }

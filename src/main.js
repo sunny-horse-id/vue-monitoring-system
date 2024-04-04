@@ -1,4 +1,5 @@
-import './assets/main.css'
+// 切换样式
+import './assets/main.scss'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

@@ -8,7 +8,7 @@
     <el-aside class="el-aside">
       <div class="el-aside-logo"></div>
       <el-menu class="el-menu" router>
-        <el-menu-item class="el-menu-item" index="">
+        <el-menu-item class="el-menu-item" index="/deploy">
           <img src="@/assets/images/deploy.png" alt="" class="img">
         </el-menu-item>
         <el-menu-item class="el-menu-item" index="">

@@ -439,9 +439,9 @@ function init4() {
 
 <template>
   <div class="home-main">
-    <el-row>
+    <el-row style="top: 5px">
       <el-col :span="8">
-        <div id="init1" style="height: 350px; width: 550px"></div>
+        <div id="init1" style="height: 350px; width: 550px; background: rgba(100,149,237,0.46)"></div>
         <div id="init2" style="height: 350px; width: 500px"></div>
       </el-col>
       <el-col :span="10">
@@ -461,5 +461,8 @@ function init4() {
   top: 48px;
   left: 0;
   width: 100%;
+  height: 100vh;
+  background: url("@/assets/images/preview.jpg");
+  background-size: cover;
 }
 </style>

@@ -1,5 +1,7 @@
 // 切换样式
 import '@/assets/main.scss'
+//导入字体文件
+import '@/assets/dsfont.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

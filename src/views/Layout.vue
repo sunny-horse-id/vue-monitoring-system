@@ -92,7 +92,7 @@
       justify-content: space-between;
 
       .h1 {
-        font-size: 20px;
+        font-size: 30px;
         font-weight: bold;
         color: #7ec9d2;
       }

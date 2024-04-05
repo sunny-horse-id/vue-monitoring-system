@@ -9,13 +9,13 @@
       <div class="el-aside-logo"></div>
       <el-menu class="el-menu" router>
         <el-menu-item class="el-menu-item" index="/deploy">
-          <img src="@/assets/images/deploy.png" alt="" class="img">
+          <img src="../assets/images/layout/deploy.png" alt="" class="img">
         </el-menu-item>
         <el-menu-item class="el-menu-item" index="">
-          <img src="@/assets/images/monitor.png" alt="" class="img">
+          <img src="../assets/images/layout/monitor.png" alt="" class="img">
         </el-menu-item>
         <el-menu-item class="el-menu-item" index="">
-          <img src="@/assets/images/visualization.png" alt="" class="img">
+          <img src="../assets/images/layout/visualization.png" alt="" class="img">
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -23,8 +23,29 @@
     <el-container class="body">
       <!--头部区域-->
       <el-header class="el-header">
-        <div></div>
-        <div></div>
+        <div>
+          <h1 class="h1">渗透能制氢实时检测系统</h1>
+        </div>
+        <el-row :gutter="20" class="el-header-row">
+          <el-col :span="3">
+            <img src="@/assets/images/layout/refresh.png" alt="" class="header-img">
+          </el-col>
+          <el-col :span="3">
+            <img src="@/assets/images/layout/full.png" alt="" class="header-img">
+          </el-col>
+          <el-col :span="5">
+            <el-button type="success">普通</el-button>
+          </el-col>
+          <el-col :span="5">
+            <el-button type="warning">严重</el-button>
+          </el-col>
+          <el-col :span="5">
+            <el-button type="danger">事故</el-button>
+          </el-col>
+          <el-col :span="3" class="el-col">
+            <img src="@/assets/images/layout/people.png" alt="" class="header-img">
+          </el-col>
+        </el-row>
       </el-header>
       <!--主要区域-->
       <el-main>
@@ -44,7 +65,7 @@
 
     .el-aside-logo {
       height: 70px;
-      background: url("@/assets/images/logo.png") no-repeat center / 40px auto;
+      background: url("@/assets/images/Layout/logo.png") no-repeat center / 40px auto;
     }
 
     .el-menu {
@@ -64,12 +85,31 @@
     }
   }
   .body{
-
     .el-header {
       background-color: #fff;
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      .h1 {
+        font-size: 20px;
+        font-weight: bold;
+        color: #00f7ff;
+      }
+
+      .el-header-row {
+        width: 400px;
+
+        .el-col{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .header-img{
+          width: 25px;
+          height: 25px;
+        }
+      }
     }
   }
 }

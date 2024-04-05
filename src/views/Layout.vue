@@ -61,7 +61,7 @@
 
   .el-aside {
     width: 50px;
-    background-color: #009cfd;
+    background-color: #048197;
 
     .el-aside-logo {
       height: 70px;
@@ -69,7 +69,7 @@
     }
 
     .el-menu {
-      background-color: #009cfd;
+      background-color: #048197;
       border-right: none;
 
       .el-menu-item {
@@ -94,7 +94,7 @@
       .h1 {
         font-size: 20px;
         font-weight: bold;
-        color: #00f7ff;
+        color: #7ec9d2;
       }
 
       .el-header-row {

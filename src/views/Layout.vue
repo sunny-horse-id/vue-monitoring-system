@@ -48,7 +48,7 @@
         </el-row>
       </el-header>
       <!--主要区域-->
-      <el-main>
+      <el-main style="padding: 5px">
         <RouterView />
       </el-main>
     </el-container>

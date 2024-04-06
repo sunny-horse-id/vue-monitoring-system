@@ -3,6 +3,12 @@ import {ref} from "vue";
 
 const power = ref(2.1)
 const current = ref(6.7)
+const buttons = ref(['按钮1', '按钮2'])
+const selectedButton = ref(0)
+function selectButton(index) {
+  // 当按钮被点击时更新选中状态
+  selectedButton.value = index;
+}
 </script>
 
 <template>
@@ -43,7 +49,7 @@ const current = ref(6.7)
             </div>
           </div>
           <!--中间部分-->
-          <div class="div-header" style="margin-top: 10px">
+          <div class="div-header">
             <el-row :gutter="1">
               <el-col :span="2">
                 <div class="bar"></div>
@@ -110,13 +116,100 @@ const current = ref(6.7)
       <!--左侧-->
       <el-col :span="5">
         <el-card>
-          666
+          <div class="div-header">
+            <el-row :gutter="1">
+              <el-col :span="2">
+                <div class="bar"></div>
+              </el-col>
+              <el-col :span="22">
+                <p class="p-header">气象信息</p>
+              </el-col>
+            </el-row>
+          </div>
+          <el-row :gutter="20" style="margin-top: 5px">
+            <el-col :span="8">
+              <div class="el-col-center">
+                <img src="@/assets/images/Deploy/temperature.png" alt="" class="lower-left-img">
+              </div>
+              <p style="margin: 0; padding: 0; text-align: center; font-size: small">环境温度</p>
+              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">28.5ºC</p>
+            </el-col>
+            <el-col :span="8">
+              <div class="el-col-center">
+                <img src="@/assets/images/Deploy/humidity.png" alt="" class="lower-left-img">
+              </div>
+              <p style="margin: 0; padding: 0; text-align: center; font-size: small">环境湿度</p>
+              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">82.6％</p>
+            </el-col>
+            <el-col :span="8">
+              <div class="el-col-center">
+                <img src="@/assets/images/Deploy/windSpeed.png" alt="" class="lower-left-img">
+              </div>
+              <p style="margin: 0; padding: 0; text-align: center; font-size: small">风速</p>
+              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">28.5ºC</p>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" style="margin-top: 5px">
+            <el-col :span="8">
+              <div class="el-col-center">
+                <img src="@/assets/images/Deploy/windForce.png" alt="" class="lower-left-img">
+              </div>
+              <p style="margin: 0; padding: 0; text-align: center; font-size: small">风力</p>
+              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">2</p>
+            </el-col>
+            <el-col :span="8">
+              <div class="el-col-center">
+                <img src="@/assets/images/Deploy/windDirection.png" alt="" class="lower-left-img">
+              </div>
+              <p style="margin: 0; padding: 0; text-align: center; font-size: small">风向</p>
+              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">0</p>
+            </el-col>
+            <el-col :span="8">
+              <div class="el-col-center">
+                <img src="@/assets/images/Deploy/windDirectionParameters.png" alt="" class="lower-left-img">
+              </div>
+              <p style="margin: 0; padding: 0; text-align: center; font-size: small">风向参数</p>
+              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">0</p>
+            </el-col>
+          </el-row>
         </el-card>
       </el-col>
       <!--右侧-->
       <el-col :span="19">
         <el-card>
-          777
+          <div class="div-header">
+            <el-row :gutter="1">
+              <el-col :span="4" style="display: flex">
+                <div class="bar"></div>
+                <div style="width: 15px"></div>
+                <p class="p-header">功率及发电趋势</p>
+              </el-col>
+              <el-col :span="20">
+              </el-col>
+            </el-row>
+          </div>
+          <div>
+            <el-button
+                v-for="(button, index) in buttons"
+                :key="index"
+                :plain="true"
+                :type="selectedButton === index ? 'primary' : 'default'"
+                @click="selectButton(index)"
+            >
+              {{ button }}
+            </el-button>
+
+            <div v-if="selectedButton === 0">
+              <!-- 第一个按钮被选中时显示的内容 -->
+              内容1
+            </div>
+            <div v-else-if="selectedButton === 1">
+              <!-- 第二个按钮被选中时显示的内容 -->
+              内容2
+            </div>
+            <!-- 可以继续添加其他按钮对应的内容 -->
+
+          </div>
         </el-card>
       </el-col>
     </el-row>
@@ -176,6 +269,11 @@ const current = ref(6.7)
     font-size: 20px;
     color: #048197;
     margin: 5px;
+  }
+
+  .lower-left-img {
+    width: 30px;
+    height: 30px;
   }
 }
 </style>

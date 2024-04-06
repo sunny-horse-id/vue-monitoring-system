@@ -1,13 +1,75 @@
 <script setup>
+// 引入相关依赖
 import {ref} from "vue";
+import * as echarts from 'echarts';
 
+// 实时显示电流和功率
 const power = ref(2.1)
 const current = ref(6.7)
-const buttons = ref(['按钮1', '按钮2'])
+
+// 使用按钮选择柱状图
+const buttons = ref(['分', '时', '日', '月', '年'])
 const selectedButton = ref(0)
 function selectButton(index) {
-  // 当按钮被点击时更新选中状态
   selectedButton.value = index;
+  switch (index) {
+    case 0:
+      setTimeout(() => {
+        perMinute();
+      }, 1);
+      break;
+    case 1:
+      //perHour();
+      break;
+    case 2:
+      //perDay();
+      break;
+    case 3:
+      //perMonth();
+      break;
+    case 4:
+      //perYear();
+      break;
+  }
+}
+
+// 加载绘制的图表
+setTimeout(() => {
+  perMinute();
+}, 1);
+
+// 使用echarts绘制图表-每分钟
+function perMinute() {
+  const chartDom = document.getElementById('PerMinute');
+  const myChart = echarts.init(chartDom);
+
+  const option = {
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: [0.1, 0.4, 0.3, 0.2, 0.3, 0.5, 0.3],
+        type: 'line',
+        smooth: true, // To make the line smooth
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: 'rgba(2,12,32,0.8)' // Gradient start color
+          }, {
+            offset: 1,
+            color: 'rgba(5,143,241,0.3)' // Gradient end color
+          }])
+        }
+      }
+    ]
+  };
+  option && myChart.setOption(option);
 }
 </script>
 
@@ -179,36 +241,38 @@ function selectButton(index) {
         <el-card>
           <div class="div-header">
             <el-row :gutter="1">
-              <el-col :span="4" style="display: flex">
+              <el-col :span="5" style="display: flex">
                 <div class="bar"></div>
                 <div style="width: 15px"></div>
-                <p class="p-header">功率及发电趋势</p>
+                <p class="p-header">功率(kW)及发电趋势</p>
               </el-col>
-              <el-col :span="20">
-              </el-col>
+              <el-col :span="19"></el-col>
             </el-row>
           </div>
-          <div>
-            <el-button
-                v-for="(button, index) in buttons"
-                :key="index"
-                :plain="true"
-                :type="selectedButton === index ? 'primary' : 'default'"
-                @click="selectButton(index)"
-            >
-              {{ button }}
-            </el-button>
-
-            <div v-if="selectedButton === 0">
-              <!-- 第一个按钮被选中时显示的内容 -->
-              内容1
-            </div>
-            <div v-else-if="selectedButton === 1">
-              <!-- 第二个按钮被选中时显示的内容 -->
-              内容2
-            </div>
-            <!-- 可以继续添加其他按钮对应的内容 -->
-
+          <div style="max-height: 145px">
+            <el-row :gutter="20">
+              <el-col :span="2">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                  <el-button
+                      v-for="(button, index) in buttons"
+                      :key="index"
+                      :plain="true"
+                      :type="selectedButton === index ? 'primary' : 'default'"
+                      @click="selectButton(index)"
+                      style="width: 21px; height: 21px; margin: 4px; z-index: 999;"
+                  >
+                    {{ button }}
+                  </el-button>
+                </div>
+              </el-col>
+              <el-col :span="22">
+                <div v-if="selectedButton === 0" class="echarts-bar" id="PerMinute"></div>
+                <div v-else-if="selectedButton === 1"></div>
+                <div v-if="selectedButton === 2"></div>
+                <div v-else-if="selectedButton === 3"></div>
+                <div v-if="selectedButton === 4"></div>
+              </el-col>
+            </el-row>
           </div>
         </el-card>
       </el-col>
@@ -274,6 +338,14 @@ function selectButton(index) {
   .lower-left-img {
     width: 30px;
     height: 30px;
+  }
+
+  .echarts-bar {
+    position: absolute;
+    left: 20px;
+    top: -40px;
+    width: 100%;
+    height: 250px;
   }
 }
 </style>

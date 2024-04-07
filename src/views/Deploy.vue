@@ -162,9 +162,51 @@ function perMinute() {
       </el-col>
       <!--中间-->
       <el-col :span="14">
-        <el-card>
-          777
-        </el-card>
+        <div style="height: 328px">
+          <el-card style="height: 100%">TODO</el-card>
+        </div>
+        <div style="margin-top: 5px">
+          <el-card style="">
+            <el-row :gutter="20" style="margin-top: 5px">
+              <el-col :span="4">
+                <div class="el-col-center">
+                  <img src="@/assets/images/Deploy/day.png" alt="" class="lower-left-img">
+                </div>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">日发电量</p>
+              </el-col>
+              <el-col :span="4">
+                <div class="el-col-center">
+                  <img src="@/assets/images/Deploy/month.png" alt="" class="lower-left-img">
+                </div>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">月发电量</p>
+              </el-col>
+              <el-col :span="4">
+                <div class="el-col-center">
+                  <img src="@/assets/images/Deploy/year.png" alt="" class="lower-left-img">
+                </div>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">年发电量</p>
+              </el-col>
+              <el-col :span="4">
+                <div class="el-col-center">
+                  <img src="@/assets/images/Deploy/day-get.png" alt="" class="lower-left-img">
+                </div>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">日收益</p>
+              </el-col>
+              <el-col :span="4">
+                <div class="el-col-center">
+                  <img src="@/assets/images/Deploy/month-get.png" alt="" class="lower-left-img">
+                </div>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">月收益</p>
+              </el-col>
+              <el-col :span="4">
+                <div class="el-col-center">
+                  <img src="@/assets/images/Deploy/year-get.png" alt="" class="lower-left-img">
+                </div>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">年收益</p>
+              </el-col>
+            </el-row>
+          </el-card>
+        </div>
       </el-col>
       <!--右侧-->
       <el-col :span="5">

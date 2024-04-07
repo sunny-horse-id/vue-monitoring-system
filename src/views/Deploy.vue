@@ -83,9 +83,8 @@ function alarmAnalysis() {
         radius: ['40%', '70%'],
         avoidLabelOverlap: false,
         label: {
-          show: true, // 显示标签
-          formatter: '{b}: {c}', // 标签格式，{b} 表示名称，{c} 表示数值
-          position: 'inside' // 标签位置，可根据需要调整
+          show: false,
+          position: 'center'
         },
         emphasis: {
           label: {
@@ -98,9 +97,9 @@ function alarmAnalysis() {
           show: false
         },
         data: [
-          { value: 735, name: '普通', itemStyle: { color: 'green' } },
-          { value: 580, name: '严重', itemStyle: { color: 'yellow' } },
-          { value: 484, name: '事故', itemStyle: { color: 'red' } },
+          { value: 0, name: '普通', itemStyle: { color: 'rgb(50,205,50)' } },
+          { value: 1182, name: '严重', itemStyle: { color: 'rgb(231,162,63)' } },
+          { value: 14, name: '事故', itemStyle: { color: 'red' } },
         ]
       }
     ]
@@ -295,10 +294,10 @@ function perMinute() {
               {{ button }}
             </el-button>
             <div v-if="selectedVideoAndImage === 0" style="display: flex;align-items: center;justify-content: center;">
-              <img src="../assets/images/Deploy/default-video.png" alt="" style="width: 100px; height: 100px; margin: 5px">
+              <img src="../assets/images/Deploy/default-video.png" alt="" style="width: 200px; height: 200px; margin: 10px">
             </div>
             <div v-if="selectedVideoAndImage === 1" style="display: flex;align-items: center;justify-content: center;">
-              <img src="../assets/images/Deploy/default-img.png" alt="" style="width: 100px; height: 100px; margin: 5px">
+              <img src="../assets/images/Deploy/default-img.png" alt="" style="width: 200px; height: 200px; margin: 10px">
             </div>
           </div>
           <!--下部-->
@@ -313,8 +312,61 @@ function perMinute() {
             >
               {{ button }}
             </el-button>
-            <div v-if="selectedAlarmAnalysisAndAlarmType === 0" style="display: flex;align-items: center;justify-content: center;">
-              <div id="AlarmAnalysis" style="width: 270px; height: 270px"></div>
+            <div v-if="selectedAlarmAnalysisAndAlarmType === 0">
+              <el-row :gutter="5">
+                <el-col :span="10">
+                  <div id="AlarmAnalysis" style="width: 125px; height: 125px; position: absolute; top:10px; left: -10px"></div>
+                </el-col>
+                <el-col :span="14">
+                  <div>
+                    <div class="div-header;" style="background-color: rgba(50,205,50,0.37); margin-top: 9px;">
+                      <el-row :gutter="1">
+                        <el-col :span="2">
+                          <div style="height: 32px;width: 5px;background-color: rgb(50,205,50);"></div>
+                        </el-col>
+                        <el-col :span="14">
+                          <p style=" margin: 6px 0 0;">普通&nbsp;<span style="color: rgb(50,205,50)">0</span></p>
+                        </el-col>
+                        <el-col :span="8" style="display: flex; justify-content: flex-end; align-items: center; position: absolute; right: 0; top:5px">
+                          <div style="border-radius: 10px; height: 22px; width: 50px; background-color: rgb(50,205,50)">
+                            <p style="text-align: center; margin: 0; color: white">0%</p>
+                          </div>
+                        </el-col>
+                      </el-row>
+                    </div>
+                    <div class="div-header;" style="background-color: rgba(231,162,63,0.37); margin-top: 9px;">
+                      <el-row :gutter="1">
+                        <el-col :span="2">
+                          <div style="height: 32px;width: 5px;background-color: rgb(231,162,63);"></div>
+                        </el-col>
+                        <el-col :span="14">
+                          <p style=" margin: 6px 0 0;">普通&nbsp;<span style="color: rgb(231,162,63)">1182</span></p>
+                        </el-col>
+                        <el-col :span="8" style="display: flex; justify-content: flex-end; align-items: center; position: absolute; right: 0; top:5px">
+                          <div style="border-radius: 10px; height: 22px; width: 50px; background-color: rgb(231,162,63)">
+                            <p style="text-align: center; margin: 0; color: white">98.8%</p>
+                          </div>
+                        </el-col>
+                      </el-row>
+                    </div>
+                    <div class="div-header;" style="background-color: rgba(255,0,0,0.37); margin-top: 9px;">
+                      <el-row :gutter="1">
+                        <el-col :span="2">
+                          <div style="height: 32px;width: 5px;background-color: red;"></div>
+                        </el-col>
+                        <el-col :span="14">
+                          <p style=" margin: 6px 0 0;">普通&nbsp;<span style="color: red">14</span></p>
+                        </el-col>
+                        <el-col :span="8" style="display: flex; justify-content: flex-end; align-items: center; position: absolute; right: 0; top:5px">
+                          <div style="border-radius: 10px; height: 22px; width: 50px; background-color: red">
+                            <p style="text-align: center; margin: 0; color: white">1.2%</p>
+                          </div>
+                        </el-col>
+                      </el-row>
+                    </div>
+                  </div>
+                </el-col>
+              </el-row>
             </div>
             <div v-if="selectedAlarmAnalysisAndAlarmType === 1" style="display: flex;align-items: center;justify-content: center;">
             </div>

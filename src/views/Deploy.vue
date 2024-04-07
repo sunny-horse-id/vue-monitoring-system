@@ -33,10 +33,81 @@ function selectButton(index) {
   }
 }
 
+// 使用按钮控制视频和图片
+const videoAndImage = ref(['视频信息', '站点照片']);
+const selectedVideoAndImage = ref(0);
+function selectVideoAndImage(index) {
+  selectedVideoAndImage.value = index;
+}
+
+// 使用按钮选择报警分析和报警类型
+const alarmAnalysisAndAlarmType = ref(['报警分析', '报警类型分析']);
+const selectedAlarmAnalysisAndAlarmType = ref(0);
+function selectAlarmAnalysisAndAlarmType(index) {
+  selectedAlarmAnalysisAndAlarmType.value = index;
+  switch (index) {
+    case 0:
+      setTimeout(() => {
+        alarmAnalysis();
+      }, 1);
+      break;
+    case 1:
+      //alarmType();
+      break;
+  }
+}
+
 // 加载绘制的图表
 setTimeout(() => {
   perMinute();
+  alarmAnalysis();
 }, 1);
+
+// 使用echarts绘制图表-报警类型
+function alarmAnalysis() {
+  const chartDom = document.getElementById('AlarmAnalysis');
+  const myChart = echarts.init(chartDom);
+
+  const option = {
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      top: '5%',
+      left: 'center'
+    },
+    series: [
+      {
+        name: '事故分析',
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        label: {
+          show: true, // 显示标签
+          formatter: '{b}: {c}', // 标签格式，{b} 表示名称，{c} 表示数值
+          position: 'inside' // 标签位置，可根据需要调整
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 40,
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: [
+          { value: 735, name: '普通', itemStyle: { color: 'green' } },
+          { value: 580, name: '严重', itemStyle: { color: 'yellow' } },
+          { value: 484, name: '事故', itemStyle: { color: 'red' } },
+        ]
+      }
+    ]
+  };
+
+  option && myChart.setOption(option);
+}
 
 // 使用echarts绘制图表-每分钟
 function perMinute() {
@@ -211,7 +282,43 @@ function perMinute() {
       <!--右侧-->
       <el-col :span="5">
         <el-card>
-          888
+          <!--上部-->
+          <div>
+            <el-button
+                v-for="(button, index) in videoAndImage"
+                :key="index"
+                :plain="true"
+                :type="selectedVideoAndImage === index ? 'primary' : 'default'"
+                @click="selectVideoAndImage(index)"
+                style="width: 60px; height: 21px; margin: 1px;"
+            >
+              {{ button }}
+            </el-button>
+            <div v-if="selectedVideoAndImage === 0" style="display: flex;align-items: center;justify-content: center;">
+              <img src="../assets/images/Deploy/default-video.png" alt="" style="width: 100px; height: 100px; margin: 5px">
+            </div>
+            <div v-if="selectedVideoAndImage === 1" style="display: flex;align-items: center;justify-content: center;">
+              <img src="../assets/images/Deploy/default-img.png" alt="" style="width: 100px; height: 100px; margin: 5px">
+            </div>
+          </div>
+          <!--下部-->
+          <div style="max-height: 256px">
+            <el-button
+                v-for="(button, index) in alarmAnalysisAndAlarmType"
+                :key="index"
+                :plain="true"
+                :type="selectedAlarmAnalysisAndAlarmType === index ? 'primary' : 'default'"
+                @click="selectAlarmAnalysisAndAlarmType(index)"
+                style="width: 90px; height: 21px; margin: 1px;"
+            >
+              {{ button }}
+            </el-button>
+            <div v-if="selectedAlarmAnalysisAndAlarmType === 0" style="display: flex;align-items: center;justify-content: center;">
+              <div id="AlarmAnalysis" style="width: 270px; height: 270px"></div>
+            </div>
+            <div v-if="selectedAlarmAnalysisAndAlarmType === 1" style="display: flex;align-items: center;justify-content: center;">
+            </div>
+          </div>
         </el-card>
       </el-col>
     </el-row>

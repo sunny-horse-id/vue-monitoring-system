@@ -240,39 +240,39 @@ function perMinute() {
             <el-row :gutter="20" style="margin-top: 5px">
               <el-col :span="4">
                 <div class="el-col-center">
-                  <img src="@/assets/images/Deploy/day.png" alt="" class="lower-left-img">
+                  <img src="@/assets/images/Deploy/total.png" alt="" class="lower-left-img">
                 </div>
-                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">日发电量</p>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">总发电量</p>
               </el-col>
               <el-col :span="4">
                 <div class="el-col-center">
-                  <img src="@/assets/images/Deploy/month.png" alt="" class="lower-left-img">
+                  <img src="@/assets/images/Deploy/net.png" alt="" class="lower-left-img">
                 </div>
-                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">月发电量</p>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">上网电量</p>
               </el-col>
               <el-col :span="4">
                 <div class="el-col-center">
-                  <img src="@/assets/images/Deploy/year.png" alt="" class="lower-left-img">
+                  <img src="@/assets/images/Deploy/v.png" alt="" class="lower-left-img">
                 </div>
-                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">年发电量</p>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">制氢速率</p>
               </el-col>
               <el-col :span="4">
                 <div class="el-col-center">
-                  <img src="@/assets/images/Deploy/day-get.png" alt="" class="lower-left-img">
+                  <img src="@/assets/images/Deploy/h2.png" alt="" class="lower-left-img">
                 </div>
-                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">日收益</p>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">氢气容量</p>
               </el-col>
               <el-col :span="4">
                 <div class="el-col-center">
-                  <img src="@/assets/images/Deploy/month-get.png" alt="" class="lower-left-img">
+                  <img src="@/assets/images/Deploy/get.png" alt="" class="lower-left-img">
                 </div>
-                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">月收益</p>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">糠酸产量</p>
               </el-col>
               <el-col :span="4">
                 <div class="el-col-center">
                   <img src="@/assets/images/Deploy/year-get.png" alt="" class="lower-left-img">
                 </div>
-                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">年收益</p>
+                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">经济收益</p>
               </el-col>
             </el-row>
           </el-card>

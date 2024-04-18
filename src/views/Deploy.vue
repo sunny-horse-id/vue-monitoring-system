@@ -10,6 +10,7 @@ const current = ref(6.7)
 // 使用按钮选择柱状图
 const buttons = ref(['分', '时', '日', '月', '年'])
 const selectedButton = ref(0)
+
 function selectButton(index) {
   selectedButton.value = index;
   switch (index) {
@@ -33,80 +34,10 @@ function selectButton(index) {
   }
 }
 
-// 使用按钮控制视频和图片
-const videoAndImage = ref(['视频信息', '站点照片']);
-const selectedVideoAndImage = ref(0);
-function selectVideoAndImage(index) {
-  selectedVideoAndImage.value = index;
-}
-
-// 使用按钮选择报警分析和报警类型
-const alarmAnalysisAndAlarmType = ref(['报警分析', '报警类型分析']);
-const selectedAlarmAnalysisAndAlarmType = ref(0);
-function selectAlarmAnalysisAndAlarmType(index) {
-  selectedAlarmAnalysisAndAlarmType.value = index;
-  switch (index) {
-    case 0:
-      setTimeout(() => {
-        alarmAnalysis();
-      }, 1);
-      break;
-    case 1:
-      //alarmType();
-      break;
-  }
-}
-
 // 加载绘制的图表
 setTimeout(() => {
   perMinute();
-  alarmAnalysis();
 }, 1);
-
-// 使用echarts绘制图表-报警类型
-function alarmAnalysis() {
-  const chartDom = document.getElementById('AlarmAnalysis');
-  const myChart = echarts.init(chartDom);
-
-  const option = {
-    tooltip: {
-      trigger: 'item'
-    },
-    legend: {
-      top: '5%',
-      left: 'center'
-    },
-    series: [
-      {
-        name: '事故分析',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: 40,
-            fontWeight: 'bold'
-          }
-        },
-        labelLine: {
-          show: false
-        },
-        data: [
-          { value: 0, name: '普通', itemStyle: { color: 'rgb(50,205,50)' } },
-          { value: 1182, name: '严重', itemStyle: { color: 'rgb(231,162,63)' } },
-          { value: 14, name: '事故', itemStyle: { color: 'red' } },
-        ]
-      }
-    ]
-  };
-
-  option && myChart.setOption(option);
-}
 
 // 使用echarts绘制图表-每分钟
 function perMinute() {
@@ -125,6 +56,10 @@ function perMinute() {
     series: [
       {
         data: [0.1, 0.4, 0.3, 0.2, 0.3, 0.5, 0.3],
+        label: {
+          show: true,
+          position: 'top'
+        },
         type: 'line',
         smooth: true, // To make the line smooth
         areaStyle: {
@@ -168,44 +103,14 @@ function perMinute() {
                 电站名称&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;渗透能电站</p>
             </div>
             <div class="div-normal">
-              <img src="@/assets/images/Deploy/position.png" alt="" class="div-img">
-              <p class="div-p">位置</p>
-            </div>
-            <div class="div-normal">
               <img src="@/assets/images/Deploy/store.png" alt="" class="div-img">
               <p class="div-p">装机容量</p>
             </div>
             <div class="div-normal">
-              <img src="@/assets/images/Deploy/number.png" alt="" class="div-img">
-              <p class="div-p">控制逆变器数量</p>
-            </div>
-          </div>
-          <!--中间部分-->
-          <div class="div-header">
-            <el-row :gutter="1">
-              <el-col :span="2">
-                <div class="bar"></div>
-              </el-col>
-              <el-col :span="22">
-                <p class="p-header">能效信息</p>
-              </el-col>
-            </el-row>
-          </div>
-          <div>
-            <div class="div-normal">
-              <img src="@/assets/images/Deploy/electricity.png" alt="" class="div-img">
-              <p class="div-p">总发电量</p>
-            </div>
-            <div class="div-normal">
               <img src="@/assets/images/Deploy/hours.png" alt="" class="div-img">
-              <p class="div-p">年使用小时数</p>
-            </div>
-            <div class="div-normal">
-              <img src="@/assets/images/Deploy/income.png" alt="" class="div-img">
-              <p class="div-p">总收益</p>
+              <p class="div-p">连续使用小时数</p>
             </div>
           </div>
-          <!--下半部分-->
           <el-row :gutter="20">
             <el-col :span="12" class="el-col-center" style="padding: 0">
               <div>
@@ -228,12 +133,63 @@ function perMinute() {
               </div>
             </el-col>
           </el-row>
+          <!--下半部分-->
+          <div class="div-header" style="margin-top: 10px">
+            <el-row :gutter="1">
+              <el-col :span="2">
+                <div class="bar"></div>
+              </el-col>
+              <el-col :span="22">
+                <p class="p-header">完成指标</p>
+              </el-col>
+            </el-row>
+          </div>
+          <!--日历进度-->
+          <div class="box-text">
+            <span class="normal-text">日历进度</span>
+            <span class="light-text">85%</span>
+          </div>
+          <div class="calendar-bar-shadow">
+            <div class="bar-light" style="width: 85%"></div>
+          </div>
+          <div class="box-text">
+            <span class="normal-text">1天</span>
+            <span class="normal-text">366天</span>
+          </div>
+          <!--总发电量-->
+          <div class="box-text">
+            <span class="normal-text">总发电量(上网电量)</span>
+            <span class="light-text">60%(<span style="color: red">50%</span>)</span>
+          </div>
+          <div class="calendar-bar-shadow">
+            <div class="bar-light" style="width: 60%">
+              <div class="special-bar-light" style="width: 50%"></div>
+            </div>
+          </div>
+          <div class="box-text">
+            <span class="normal-text">0</span>
+            <span class="normal-text">100万kWh</span>
+          </div>
+          <!--氢气产量-->
+          <div class="box-text">
+            <span class="normal-text">氢气产量</span>
+            <span class="light-text">70%</span>
+          </div>
+          <div class="calendar-bar-shadow">
+            <div class="bar-light" style="width: 70%"></div>
+          </div>
+          <div class="box-text">
+            <span class="normal-text">0</span>
+            <span class="normal-text">1000mol</span>
+          </div>
         </el-card>
       </el-col>
       <!--中间-->
       <el-col :span="14">
         <div style="height: 328px">
-          <el-card style="height: 100%">TODO</el-card>
+          <el-card style="height: 100%">
+
+          </el-card>
         </div>
         <div style="margin-top: 5px">
           <el-card style="">
@@ -281,96 +237,7 @@ function perMinute() {
       <!--右侧-->
       <el-col :span="5">
         <el-card>
-          <!--上部-->
-          <div>
-            <el-button
-                v-for="(button, index) in videoAndImage"
-                :key="index"
-                :plain="true"
-                :type="selectedVideoAndImage === index ? 'primary' : 'default'"
-                @click="selectVideoAndImage(index)"
-                style="width: 60px; height: 21px; margin: 1px;"
-            >
-              {{ button }}
-            </el-button>
-            <div v-if="selectedVideoAndImage === 0" style="display: flex;align-items: center;justify-content: center;">
-              <img src="../assets/images/Deploy/default-video.png" alt="" style="width: 200px; height: 200px; margin: 10px">
-            </div>
-            <div v-if="selectedVideoAndImage === 1" style="display: flex;align-items: center;justify-content: center;">
-              <img src="../assets/images/Deploy/default-img.png" alt="" style="width: 200px; height: 200px; margin: 10px">
-            </div>
-          </div>
-          <!--下部-->
-          <div style="max-height: 256px">
-            <el-button
-                v-for="(button, index) in alarmAnalysisAndAlarmType"
-                :key="index"
-                :plain="true"
-                :type="selectedAlarmAnalysisAndAlarmType === index ? 'primary' : 'default'"
-                @click="selectAlarmAnalysisAndAlarmType(index)"
-                style="width: 90px; height: 21px; margin: 1px;"
-            >
-              {{ button }}
-            </el-button>
-            <div v-if="selectedAlarmAnalysisAndAlarmType === 0">
-              <el-row :gutter="5">
-                <el-col :span="10">
-                  <div id="AlarmAnalysis" style="width: 125px; height: 125px; position: absolute; top:10px; left: -10px"></div>
-                </el-col>
-                <el-col :span="14">
-                  <div>
-                    <div class="div-header;" style="background-color: rgba(50,205,50,0.37); margin-top: 9px;">
-                      <el-row :gutter="1">
-                        <el-col :span="2">
-                          <div style="height: 32px;width: 5px;background-color: rgb(50,205,50);"></div>
-                        </el-col>
-                        <el-col :span="14">
-                          <p style=" margin: 6px 0 0;">普通&nbsp;<span style="color: rgb(50,205,50)">0</span></p>
-                        </el-col>
-                        <el-col :span="8" style="display: flex; justify-content: flex-end; align-items: center; position: absolute; right: 0; top:5px">
-                          <div style="border-radius: 10px; height: 22px; width: 50px; background-color: rgb(50,205,50)">
-                            <p style="text-align: center; margin: 0; color: white">0%</p>
-                          </div>
-                        </el-col>
-                      </el-row>
-                    </div>
-                    <div class="div-header;" style="background-color: rgba(231,162,63,0.37); margin-top: 9px;">
-                      <el-row :gutter="1">
-                        <el-col :span="2">
-                          <div style="height: 32px;width: 5px;background-color: rgb(231,162,63);"></div>
-                        </el-col>
-                        <el-col :span="14">
-                          <p style=" margin: 6px 0 0;">普通&nbsp;<span style="color: rgb(231,162,63)">1182</span></p>
-                        </el-col>
-                        <el-col :span="8" style="display: flex; justify-content: flex-end; align-items: center; position: absolute; right: 0; top:5px">
-                          <div style="border-radius: 10px; height: 22px; width: 50px; background-color: rgb(231,162,63)">
-                            <p style="text-align: center; margin: 0; color: white">98.8%</p>
-                          </div>
-                        </el-col>
-                      </el-row>
-                    </div>
-                    <div class="div-header;" style="background-color: rgba(255,0,0,0.37); margin-top: 9px;">
-                      <el-row :gutter="1">
-                        <el-col :span="2">
-                          <div style="height: 32px;width: 5px;background-color: red;"></div>
-                        </el-col>
-                        <el-col :span="14">
-                          <p style=" margin: 6px 0 0;">普通&nbsp;<span style="color: red">14</span></p>
-                        </el-col>
-                        <el-col :span="8" style="display: flex; justify-content: flex-end; align-items: center; position: absolute; right: 0; top:5px">
-                          <div style="border-radius: 10px; height: 22px; width: 50px; background-color: red">
-                            <p style="text-align: center; margin: 0; color: white">1.2%</p>
-                          </div>
-                        </el-col>
-                      </el-row>
-                    </div>
-                  </div>
-                </el-col>
-              </el-row>
-            </div>
-            <div v-if="selectedAlarmAnalysisAndAlarmType === 1" style="display: flex;align-items: center;justify-content: center;">
-            </div>
-          </div>
+
         </el-card>
       </el-col>
     </el-row>
@@ -380,7 +247,7 @@ function perMinute() {
       <el-col :span="5">
         <el-card style="height: 99%">
           <el-row :gutter="10" style="height: 45%">
-            <el-col :span="12"  class="footer-left-item">
+            <el-col :span="12" class="footer-left-item">
               <img src="@/assets/images/Deploy/temperature.png" alt="" class="item-img">
               <span class="item-text-top">流体温度</span>
               <span class="item-text-bottom">28.5℃</span>
@@ -392,7 +259,7 @@ function perMinute() {
             </el-col>
           </el-row>
           <el-row :gutter="10" style="height: 45%; margin-top: 5px">
-            <el-col :span="12"  class="footer-left-item">
+            <el-col :span="12" class="footer-left-item">
               <img src="@/assets/images/Deploy/concentration.png" alt="" class="item-img">
               <span class="item-text-top">浓度梯度</span>
               <span class="item-text-bottom">2mol/L</span>
@@ -537,6 +404,41 @@ function perMinute() {
     top: -40px;
     width: 100%;
     height: 250px;
+  }
+
+  .box-text {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3px;
+    width: 100%;
+
+    .normal-text {
+      font-size: 13px;
+    }
+
+    .light-text {
+      font-size: 13px;
+      color: #62D4CA;
+      font-weight: bolder;
+    }
+  }
+
+  .calendar-bar-shadow {
+    width: 100%;
+    height: 10px;
+    background-color: #85867e;
+  }
+
+  .bar-light {
+    position: relative;
+    height: 10px;
+    background-color: #62D4CA;
+
+    .special-bar-light {
+      position: relative;
+      height: 10px;
+      background-color: #d81616;
+    }
   }
 }
 </style>

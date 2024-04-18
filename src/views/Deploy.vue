@@ -3,6 +3,9 @@
 import {ref} from "vue";
 import * as echarts from 'echarts';
 
+// 警告弹窗
+const centerDialogVisible = ref(false)
+
 // 实时显示电流和功率
 const power = ref(2.1)
 const current = ref(6.7)
@@ -32,6 +35,14 @@ function selectButton(index) {
       //perYear();
       break;
   }
+}
+
+// 使用按钮选择报警
+const alarmButtons = ref(['发电侧', '储能侧', '制氢侧'])
+const selectedAlarmButtons = ref(0)
+
+function selectAlarmButtons(index) {
+  selectedAlarmButtons.value = index;
 }
 
 // 加载绘制的图表
@@ -237,8 +248,58 @@ function perMinute() {
       <!--右侧-->
       <el-col :span="5">
         <el-card>
-
+          <div class="div-header">
+            <el-row :gutter="1">
+              <el-col :span="2">
+                <div class="bar"></div>
+              </el-col>
+              <el-col :span="22">
+                <p class="p-header">站点报警</p>
+              </el-col>
+            </el-row>
+          </div>
+          <div style="display: flex;justify-content: space-between;margin-top: 15px">
+            <el-button
+                v-for="(button, index) in alarmButtons"
+                :key="index"
+                :plain="true"
+                :type="selectedAlarmButtons === index ? 'primary' : 'default'"
+                @click="selectAlarmButtons(index)"
+                style="width: 70px; height: 30px; margin: 4px; z-index: 999;"
+            >
+              {{ button }}
+            </el-button>
+          </div>
+          <div style="margin-top: 10px">
+            <div v-if="selectedAlarmButtons === 0">
+              666
+            </div>
+            <div v-else-if="selectedAlarmButtons === 1">
+              777
+            </div>
+            <div v-if="selectedAlarmButtons === 2">
+              888
+            </div>
+          </div>
         </el-card>
+        <el-dialog
+            v-model="centerDialogVisible"
+            width="500"
+            align-center
+        >
+          <template #title>
+            <div style="display: flex;align-items: center;">
+              <img src="@/assets/images/Deploy/warning.png" alt="" style="width: 25px; height: 25px">
+              <div style="font-weight: bold; font-size: x-large">警告</div>
+            </div>
+          </template>
+          <span>警告：系统发电侧出现故障，请尽快检查！</span>
+          <template #footer>
+            <div class="dialog-footer">
+              <el-button type="danger" @click="centerDialogVisible = false">确定</el-button>
+            </div>
+          </template>
+        </el-dialog>
       </el-col>
     </el-row>
     <!--下部分-->

@@ -378,61 +378,29 @@ function perMinute() {
     <el-row :gutter="8" class="el-row-footer">
       <!--左侧-->
       <el-col :span="5">
-        <el-card>
-          <div class="div-header">
-            <el-row :gutter="1">
-              <el-col :span="2">
-                <div class="bar"></div>
-              </el-col>
-              <el-col :span="22">
-                <p class="p-header">气象信息</p>
-              </el-col>
-            </el-row>
-          </div>
-          <el-row :gutter="20" style="margin-top: 5px">
-            <el-col :span="8">
-              <div class="el-col-center">
-                <img src="@/assets/images/Deploy/temperature.png" alt="" class="lower-left-img">
-              </div>
-              <p style="margin: 0; padding: 0; text-align: center; font-size: small">环境温度</p>
-              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">28.5ºC</p>
+        <el-card style="height: 99%">
+          <el-row :gutter="10" style="height: 45%">
+            <el-col :span="12"  class="footer-left-item">
+              <img src="@/assets/images/Deploy/temperature.png" alt="" class="item-img">
+              <span class="item-text-top">流体温度</span>
+              <span class="item-text-bottom">28.5℃</span>
             </el-col>
-            <el-col :span="8">
-              <div class="el-col-center">
-                <img src="@/assets/images/Deploy/humidity.png" alt="" class="lower-left-img">
-              </div>
-              <p style="margin: 0; padding: 0; text-align: center; font-size: small">环境湿度</p>
-              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">82.6％</p>
-            </el-col>
-            <el-col :span="8">
-              <div class="el-col-center">
-                <img src="@/assets/images/Deploy/windSpeed.png" alt="" class="lower-left-img">
-              </div>
-              <p style="margin: 0; padding: 0; text-align: center; font-size: small">风速</p>
-              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">28.5ºC</p>
+            <el-col :span="12" class="footer-left-item">
+              <img src="@/assets/images/Deploy/velocity.png" alt="" class="item-img">
+              <span class="item-text-top">液体流速</span>
+              <span class="item-text-bottom">2m/s</span>
             </el-col>
           </el-row>
-          <el-row :gutter="20" style="margin-top: 5px">
-            <el-col :span="8">
-              <div class="el-col-center">
-                <img src="@/assets/images/Deploy/windForce.png" alt="" class="lower-left-img">
-              </div>
-              <p style="margin: 0; padding: 0; text-align: center; font-size: small">风力</p>
-              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">2</p>
+          <el-row :gutter="10" style="height: 45%; margin-top: 5px">
+            <el-col :span="12"  class="footer-left-item">
+              <img src="@/assets/images/Deploy/concentration.png" alt="" class="item-img">
+              <span class="item-text-top">浓度梯度</span>
+              <span class="item-text-bottom">2mol/L</span>
             </el-col>
-            <el-col :span="8">
-              <div class="el-col-center">
-                <img src="@/assets/images/Deploy/windDirection.png" alt="" class="lower-left-img">
-              </div>
-              <p style="margin: 0; padding: 0; text-align: center; font-size: small">风向</p>
-              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">0</p>
-            </el-col>
-            <el-col :span="8">
-              <div class="el-col-center">
-                <img src="@/assets/images/Deploy/windDirectionParameters.png" alt="" class="lower-left-img">
-              </div>
-              <p style="margin: 0; padding: 0; text-align: center; font-size: small">风向参数</p>
-              <p style="margin: 0; padding: 0; text-align: center; font-weight: bold;">0</p>
+            <el-col :span="12" class="footer-left-item">
+              <img src="@/assets/images/Deploy/ph.png" alt="" class="item-img">
+              <span class="item-text-top">流体pH</span>
+              <span class="item-text-bottom">7.0</span>
             </el-col>
           </el-row>
         </el-card>
@@ -520,6 +488,28 @@ function perMinute() {
 
   .el-row-footer {
     margin-top: 8px;
+
+    .footer-left-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .item-img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .item-text-top {
+        font-size: small;
+        margin: 1px;
+      }
+
+      .item-text-bottom {
+        font-size: large;
+        font-weight: bold;
+      }
+    }
   }
 
   .el-col-center {

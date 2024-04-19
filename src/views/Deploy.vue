@@ -14,13 +14,12 @@ const logType = ref(['故障日志', '事故日志'])
 const centerDialogVisible = ref(false)
 
 // 实时显示电流和功率
-const power = ref(2.1)
-const current = ref(6.7)
+const power = ref(200.1)
+const current = ref(48.6)
 
 // 使用按钮选择柱状图
 const buttons = ref(['分', '时', '日', '月', '年'])
 const selectedButton = ref(0)
-
 function selectButton(index) {
   selectedButton.value = index;
   switch (index) {
@@ -46,7 +45,6 @@ function selectButton(index) {
 
 // 使用按钮选择图标图表
 const selectedIconButtons = ref(0)
-
 function selectIconButtons(index) {
   selectedIconButtons.value = index;
   switch (index) {
@@ -83,7 +81,7 @@ function perMinute() {
     },
     series: [
       {
-        data: [0.1, 0.4, 0.3, 0.2, 0.3, 0.5, 0.3],
+        data: [199, 197, 200, 210, 207, 205, 208],
         label: {
           show: true,
           position: 'top'
@@ -136,10 +134,6 @@ function monthPower() {
         ['11', 53.9, 39.1],
         ['12', 53.9, 39.1]
       ]
-    },
-    label: {
-      show: true,
-      position: 'top'
     },
     xAxis: {type: 'category'},
     yAxis: {},
@@ -287,29 +281,29 @@ setTimeout(() => {
 // 日志数据
 const warningData = [
   {
-    date: '2024-04-19 17:44:05',
+    date: '2023-07-19 17:44:05',
     place: '发电侧',
     content: '流体PH过高'
   },
   {
-    date: '2024-04-19 17:44:05',
-    place: '发电侧',
-    content: '流体PH过高'
+    date: '2023-06-12 15:33:11',
+    place: '制氢侧',
+    content: '氢气压力过低'
   },
   {
-    date: '2024-04-19 17:44:05',
-    place: '发电侧',
-    content: '流体PH过高'
+    date: '2023-04-19 12:21:09',
+    place: '储能侧',
+    content: '电压过高'
   },
   {
-    date: '2024-04-19 17:44:05',
-    place: '发电侧',
-    content: '流体PH过高'
+    date: '2023-03-02 06:55:01',
+    place: '储能侧',
+    content: '电压过低'
   },
   {
-    date: '2024-04-19 17:44:05',
+    date: '2023-01-31 08:32:19',
     place: '发电侧',
-    content: '流体PH过高'
+    content: '装置剧烈抖动'
   },
   {
     date: '2024-04-19 17:44:05',
@@ -407,11 +401,11 @@ const errorData = [
             </div>
             <div class="div-normal">
               <img src="@/assets/images/Deploy/store.png" alt="" class="div-img">
-              <p class="div-p">装机容量</p>
+              <p class="div-p">装机容量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;600kW</p>
             </div>
             <div class="div-normal">
               <img src="@/assets/images/Deploy/hours.png" alt="" class="div-img">
-              <p class="div-p">连续使用小时数</p>
+              <p class="div-p">连续使用小时数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2140h</p>
             </div>
           </div>
           <el-row :gutter="20">
@@ -431,7 +425,7 @@ const errorData = [
                   <div class="special-p">{{ current }}</div>
                 </div>
                 <div style="text-align: center;">
-                  实时电流(A)
+                  总产氢量(t)
                 </div>
               </div>
             </el-col>
@@ -462,16 +456,16 @@ const errorData = [
           <!--总发电量-->
           <div class="box-text">
             <span class="normal-text">总发电量(上网电量)</span>
-            <span class="light-text">60%(<span style="color: #80FFA5">30%</span>)</span>
+            <span class="light-text">78%(<span style="color: #80FFA5">20%</span>)</span>
           </div>
           <div class="calendar-bar-shadow">
-            <div class="bar-light" style="width: 60%">
-              <div class="special-bar-light" style="width: 50%"></div>
+            <div class="bar-light" style="width: 78%">
+              <div class="special-bar-light" style="width: 25%"></div>
             </div>
           </div>
           <div class="box-text">
             <span class="normal-text">0</span>
-            <span class="normal-text">100万kWh</span>
+            <span class="normal-text">500万kWh</span>
           </div>
           <!--氢气产量-->
           <div class="box-text">
@@ -483,7 +477,7 @@ const errorData = [
           </div>
           <div class="box-text">
             <span class="normal-text">0</span>
-            <span class="normal-text">1000mol</span>
+            <span class="normal-text">200t</span>
           </div>
         </el-card>
       </el-col>
@@ -573,17 +567,17 @@ const errorData = [
             <el-table :data="warningData" style="width: 100%" height="350px" v-if="logStore.logValue === 0">
               <el-table-column fixed prop="date" label="时间" width="115" />
               <el-table-column prop="place" label="位置" width="75" />
-              <el-table-column prop="content" label="内容" width="100" />
+              <el-table-column prop="content" label="内容" width="110" />
               <el-table-column label="操作" width="100px">
-                <el-button type="success" round>已解决</el-button>
+                <el-button type="warning" round>解决</el-button>
               </el-table-column>
             </el-table>
             <el-table :data="errorData" style="width: 100%" height="350px" v-if="logStore.logValue === 1">
               <el-table-column fixed prop="date" label="时间" width="115" />
               <el-table-column prop="place" label="位置" width="75" />
-              <el-table-column prop="content" label="内容" width="100" />
+              <el-table-column prop="content" label="内容" width="110" />
               <el-table-column label="操作" width="100px">
-                <el-button type="success" round>已解决</el-button>
+                <el-button type="danger" round>解决</el-button>
               </el-table-column>
             </el-table>
           </div>
@@ -617,24 +611,24 @@ const errorData = [
             <el-col :span="12" class="footer-left-item">
               <img src="@/assets/images/Deploy/temperature.png" alt="" class="item-img">
               <span class="item-text-top">流体温度</span>
-              <span class="item-text-bottom">28.5℃</span>
+              <span class="item-text-bottom">9.5℃</span>
             </el-col>
             <el-col :span="12" class="footer-left-item">
               <img src="@/assets/images/Deploy/velocity.png" alt="" class="item-img">
               <span class="item-text-top">液体流速</span>
-              <span class="item-text-bottom">2m/s</span>
+              <span class="item-text-bottom">3.4km/h</span>
             </el-col>
           </el-row>
           <el-row :gutter="10" style="height: 45%; margin-top: 5px">
             <el-col :span="12" class="footer-left-item">
               <img src="@/assets/images/Deploy/concentration.png" alt="" class="item-img">
               <span class="item-text-top">浓度梯度</span>
-              <span class="item-text-bottom">2mol/L</span>
+              <span class="item-text-bottom">50</span>
             </el-col>
             <el-col :span="12" class="footer-left-item">
               <img src="@/assets/images/Deploy/ph.png" alt="" class="item-img">
               <span class="item-text-top">流体pH</span>
-              <span class="item-text-bottom">7.0</span>
+              <span class="item-text-bottom">8.2</span>
             </el-col>
           </el-row>
         </el-card>

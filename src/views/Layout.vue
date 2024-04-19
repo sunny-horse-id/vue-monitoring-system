@@ -33,7 +33,7 @@ function refresh() {
       <!--头部区域-->
       <el-header class="el-header">
         <div>
-          <h1 class="h1">渗透能制氢实时检测系统</h1>
+          <h1 class="h1">渗透能发电制氢监测系统</h1>
         </div>
         <el-row :gutter="20" class="el-header-row">
           <el-col :span="6"></el-col>

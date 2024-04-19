@@ -14,9 +14,6 @@
         <el-menu-item class="el-menu-item" index="/monitor">
           <img src="../assets/images/layout/monitor.png" alt="" class="img">
         </el-menu-item>
-        <el-menu-item class="el-menu-item" index="/visualization">
-          <img src="../assets/images/layout/visualization.png" alt="" class="img">
-        </el-menu-item>
       </el-menu>
     </el-aside>
     <!--右侧主区域-->

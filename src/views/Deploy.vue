@@ -514,24 +514,32 @@ const errorData = [
                        @click="selectIconButtons(0)">
                 </div>
                 <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">总发电量</p>
+                <div v-if="selectedIconButtons===0" style="width: 50px; height: 5px; background-color: #5FA6FE;margin-top: 10px; position: absolute;
+                top: 45px; left: 50px"></div>
               </el-col>
               <el-col :span="5">
                 <div class="el-col-center">
                   <img src="@/assets/images/Deploy/v.png" alt="" class="lower-left-img" @click="selectIconButtons(1)">
                 </div>
                 <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">制氢速率</p>
+                <div v-if="selectedIconButtons===1" style="width: 50px; height: 5px; background-color: #5FA6FE;margin-top: 10px; position: absolute;
+                top: 45px; left: 198px"></div>
               </el-col>
               <el-col :span="5">
                 <div class="el-col-center">
                   <img src="@/assets/images/Deploy/h2.png" alt="" class="lower-left-img" @click="selectIconButtons(2)">
                 </div>
                 <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">氢气容量</p>
+                <div v-if="selectedIconButtons===2" style="width: 50px; height: 5px; background-color: #5FA6FE;margin-top: 10px; position: absolute;
+                top: 45px; left: 346px"></div>
               </el-col>
               <el-col :span="5">
                 <div class="el-col-center">
                   <img src="@/assets/images/Deploy/get.png" alt="" class="lower-left-img" @click="selectIconButtons(3)">
                 </div>
                 <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">糠酸产量</p>
+                <div v-if="selectedIconButtons===3" style="width: 50px; height: 5px; background-color: #5FA6FE;margin-top: 10px; position: absolute;
+                top: 45px; left: 495px"></div>
               </el-col>
               <el-col :span="4">
                 <div class="el-col-center">
@@ -539,6 +547,8 @@ const errorData = [
                        @click="selectIconButtons(4)">
                 </div>
                 <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">经济收益</p>
+                <div v-if="selectedIconButtons===4" style="width: 50px; height: 5px; background-color: #5FA6FE;margin-top: 10px; position: absolute;
+                top: 45px; left: 628px"></div>
               </el-col>
             </el-row>
           </el-card>
@@ -562,7 +572,7 @@ const errorData = [
           <div style="margin-top: 10px">
             <el-table :data="warningData" style="width: 100%" height="350px" v-if="logStore.logValue === 0">
               <el-table-column fixed prop="date" label="时间" width="115" />
-              <el-table-column prop="place" label="位置" width="80" />
+              <el-table-column prop="place" label="位置" width="75" />
               <el-table-column prop="content" label="内容" width="100" />
               <el-table-column label="操作" width="100px">
                 <el-button type="success" round>已解决</el-button>
@@ -570,7 +580,7 @@ const errorData = [
             </el-table>
             <el-table :data="errorData" style="width: 100%" height="350px" v-if="logStore.logValue === 1">
               <el-table-column fixed prop="date" label="时间" width="115" />
-              <el-table-column prop="place" label="位置" width="80" />
+              <el-table-column prop="place" label="位置" width="75" />
               <el-table-column prop="content" label="内容" width="100" />
               <el-table-column label="操作" width="100px">
                 <el-button type="success" round>已解决</el-button>

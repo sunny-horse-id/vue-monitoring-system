@@ -77,15 +77,11 @@ function perMinute() {
       data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
     },
     yAxis: {
-      type: 'value'
+      type: 'value',
     },
     series: [
       {
         data: [199, 197, 200, 210, 207, 205, 208],
-        label: {
-          show: true,
-          position: 'top'
-        },
         type: 'line',
         smooth: true, // To make the line smooth
         areaStyle: {

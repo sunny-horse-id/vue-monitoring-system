@@ -45,10 +45,28 @@ function selectAlarmButtons(index) {
   selectedAlarmButtons.value = index;
 }
 
-// 加载绘制的图表
-setTimeout(() => {
-  perMinute();
-}, 1);
+// 使用按钮选择图标图表
+const selectedIconButtons = ref(0)
+
+function selectIconButtons(index) {
+  selectedIconButtons.value = index;
+  switch (index) {
+    case 0:
+      setTimeout(() => {
+        monthPower();
+        perDay();
+      }, 1);
+      break;
+    case 1:
+      break
+    case 2:
+      break
+    case 3:
+      break
+    case 4:
+      break
+  }
+}
 
 // 使用echarts绘制图表-每分钟
 function perMinute() {
@@ -87,6 +105,172 @@ function perMinute() {
   };
   option && myChart.setOption(option);
 }
+
+// 使用echarts绘制图表-月发电量
+function monthPower() {
+  const chartDom = document.getElementById('MonthPower');
+  const myChart = echarts.init(chartDom);
+  const option = {
+    title: {
+      text: '每月总发电与上网电量(kWh)',
+      top: '10px',
+      left: '55px'
+    },
+    legend: {
+      right: '85px',
+      top: '15px'
+    },
+    tooltip: {},
+    dataset: {
+      source: [
+        ['product', '总发电量', '上网电量'],
+        ['1', 73.4, 55.1],
+        ['2', 82.5, 65.2],
+        ['3', 53.9, 39.1],
+        ['4', 53.9, 39.1],
+        ['5', 82.5, 65.2],
+        ['6', 73.4, 55.1],
+        ['7', 82.5, 65.2],
+        ['8', 82.5, 65.2],
+        ['9', 73.4, 55.1],
+        ['10', 100, 39.1],
+        ['11', 53.9, 39.1],
+        ['12', 53.9, 39.1]
+      ]
+    },
+    label: {
+      show: true,
+      position: 'top'
+    },
+    xAxis: {type: 'category'},
+    yAxis: {},
+    series: [{type: 'bar'}, {type: 'bar'}]
+  };
+
+  option && myChart.setOption(option);
+}
+
+// 使用echarts绘制图表-当月每日发电量
+function perDay() {
+  const chartDom = document.getElementById('PerDay');
+  const myChart = echarts.init(chartDom);
+  const option = {
+    color: ['#80FFA5', '#00DDFF'],
+    title: {
+      top: '20px',
+      left: '20px',
+      text: '当月每日总发电与上网电量(kWh)'
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985'
+        }
+      }
+    },
+    legend: {
+      right: '30px',
+      top: '20px',
+      data: ['总发电量', '上网电量']
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        boundaryGap: false,
+        data: [1, 2, 3, 4, 5, 6, 7, 8,
+          9, 10, 11, 12, 13, 14, 15, 16,
+          17, 18, 19, 20, 21, 22, 23, 24,
+          25, 26, 27, 28, 29, 30, 31]
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    series: [
+      {
+        name: '上网电量',
+        type: 'line',
+        stack: 'Total',
+        smooth: true,
+        lineStyle: {
+          width: 0
+        },
+        showSymbol: false,
+        areaStyle: {
+          opacity: 0.8,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgb(128, 255, 165)'
+            },
+            {
+              offset: 1,
+              color: 'rgb(1, 191, 236)'
+            }
+          ])
+        },
+        emphasis: {
+          focus: 'series'
+        },
+        // 数值小于总发电量的值
+        data: [1.2, 1.1, 0.9, 1.2, 1.3, 1.4, 1.5,
+          1.6, 1.7, 1.8, 1.9, 1.0, 1.1, 1.2, 1.3,
+          1.4, 1.5, 1.6, 1.7, 2.0, 1.9, 1.8, 1.1,
+          1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9]
+      },
+      {
+        name: '总发电量',
+        type: 'line',
+        stack: 'Total',
+        smooth: true,
+        lineStyle: {
+          width: 0
+        },
+        showSymbol: false,
+        areaStyle: {
+          opacity: 0.8,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgb(0, 221, 255)'
+            },
+            {
+              offset: 1,
+              color: 'rgb(77, 119, 255)'
+            }
+          ])
+        },
+        emphasis: {
+          focus: 'series'
+        },
+        // 总发电量的值
+        data: [2.2, 3.2, 4.5, 2.3, 2.5, 2.3, 1.8,
+          2.2, 2.5, 2.8, 3.0, 3.3, 3.5, 3.0, 2.0,
+          1.8, 1.8, 2.0, 2.3, 2.5, 2.3, 1.8, 2.2,
+          2.5, 2.8, 3.0, 3.3, 3.5, 3.0, 2.0, 4.1]
+      },
+    ]
+  };
+
+  option && myChart.setOption(option);
+}
+
+// 初始化加载绘制的图表
+setTimeout(() => {
+  perMinute();
+  monthPower();
+  perDay();
+}, 1);
 </script>
 
 <template>
@@ -170,7 +354,7 @@ function perMinute() {
           <!--总发电量-->
           <div class="box-text">
             <span class="normal-text">总发电量(上网电量)</span>
-            <span class="light-text">60%(<span style="color: red">50%</span>)</span>
+            <span class="light-text">60%(<span style="color: #03fd82">50%</span>)</span>
           </div>
           <div class="calendar-bar-shadow">
             <div class="bar-light" style="width: 60%">
@@ -199,45 +383,53 @@ function perMinute() {
       <el-col :span="14">
         <div style="height: 328px">
           <el-card style="height: 100%">
-
+            <div v-if="selectedIconButtons === 0">
+              <div>
+                <div id="MonthPower"
+                     style="width: 115%; height: 210px; position: relative; top: -15px; left: -50px"></div>
+              </div>
+              <div>
+                <div id="PerDay" style="width: 103%; height: 170px; position: relative; top: -75px; left: -15px"></div>
+              </div>
+            </div>
+            <div v-if="selectedIconButtons === 1"></div>
+            <div v-if="selectedIconButtons === 2"></div>
+            <div v-if="selectedIconButtons === 3"></div>
+            <div v-if="selectedIconButtons === 4"></div>
           </el-card>
         </div>
         <div style="margin-top: 5px">
           <el-card style="">
             <el-row :gutter="20" style="margin-top: 5px">
-              <el-col :span="4">
+              <el-col :span="5">
                 <div class="el-col-center">
-                  <img src="@/assets/images/Deploy/total.png" alt="" class="lower-left-img">
+                  <img src="@/assets/images/Deploy/total.png" alt="" class="lower-left-img"
+                       @click="selectIconButtons(0)">
                 </div>
                 <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">总发电量</p>
               </el-col>
-              <el-col :span="4">
+              <el-col :span="5">
                 <div class="el-col-center">
-                  <img src="@/assets/images/Deploy/net.png" alt="" class="lower-left-img">
-                </div>
-                <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">上网电量</p>
-              </el-col>
-              <el-col :span="4">
-                <div class="el-col-center">
-                  <img src="@/assets/images/Deploy/v.png" alt="" class="lower-left-img">
+                  <img src="@/assets/images/Deploy/v.png" alt="" class="lower-left-img" @click="selectIconButtons(1)">
                 </div>
                 <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">制氢速率</p>
               </el-col>
-              <el-col :span="4">
+              <el-col :span="5">
                 <div class="el-col-center">
-                  <img src="@/assets/images/Deploy/h2.png" alt="" class="lower-left-img">
+                  <img src="@/assets/images/Deploy/h2.png" alt="" class="lower-left-img" @click="selectIconButtons(2)">
                 </div>
                 <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">氢气容量</p>
               </el-col>
-              <el-col :span="4">
+              <el-col :span="5">
                 <div class="el-col-center">
-                  <img src="@/assets/images/Deploy/get.png" alt="" class="lower-left-img">
+                  <img src="@/assets/images/Deploy/get.png" alt="" class="lower-left-img" @click="selectIconButtons(3)">
                 </div>
                 <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">糠酸产量</p>
               </el-col>
               <el-col :span="4">
                 <div class="el-col-center">
-                  <img src="@/assets/images/Deploy/year-get.png" alt="" class="lower-left-img">
+                  <img src="@/assets/images/Deploy/year-get.png" alt="" class="lower-left-img"
+                       @click="selectIconButtons(4)">
                 </div>
                 <p style="padding: 0; text-align: center; font-size: small; margin: 5px 0 0;">经济收益</p>
               </el-col>
@@ -498,7 +690,7 @@ function perMinute() {
     .special-bar-light {
       position: relative;
       height: 10px;
-      background-color: #d81616;
+      background-color: #03fd82;
     }
   }
 }

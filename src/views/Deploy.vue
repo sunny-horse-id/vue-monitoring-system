@@ -200,7 +200,7 @@ function perDay() {
         data: [1, 2, 3, 4, 5, 6, 7, 8,
           9, 10, 11, 12, 13, 14, 15, 16,
           17, 18, 19, 20, 21, 22, 23, 24,
-          25, 26, 27, 28, 29, 30, 31]
+          25, 26, 27, 28, 29, 30]
       }
     ],
     yAxis: [
@@ -237,7 +237,7 @@ function perDay() {
         data: [1.2, 1.1, 0.9, 1.2, 1.3, 1.4, 1.5,
           1.6, 1.7, 1.8, 1.9, 1.0, 1.1, 1.2, 1.3,
           1.4, 1.5, 1.6, 1.7, 2.0, 1.9, 1.6, 1.1,
-          1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9],
+          1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8],
         z: 999,
       },
       {
@@ -269,7 +269,7 @@ function perDay() {
         data: [2.2, 3.2, 4.5, 2.3, 2.5, 2.3, 1.8,
           2.2, 2.5, 2.8, 3.0, 3.3, 3.5, 3.0, 2.0,
           1.8, 1.8, 2.0, 2.3, 2.5, 2.3, 1.8, 2.2,
-          2.5, 2.8, 3.0, 3.3, 3.5, 3.0, 2.0, 4.1]
+          2.5, 2.8, 3.0, 3.3, 3.5, 3.0, 2.0]
       },
     ]
   };
@@ -392,16 +392,15 @@ setTimeout(() => {
         </el-card>
       </el-col>
       <!--中间-->
-      <el-col :span="14">
+      <el-col :span="12">
         <div style="height: 328px">
           <el-card style="height: 100%">
             <div v-if="selectedIconButtons === 0">
               <div>
-                <div id="MonthPower"
-                     style="width: 115%; height: 210px; position: relative; top: -15px; left: -50px"></div>
+                <div id="MonthPower" style="width: 118%; height: 210px; position: relative; top: -15px; left: -50px"></div>
               </div>
               <div>
-                <div id="PerDay" style="width: 103%; height: 170px; position: relative; top: -75px; left: -15px"></div>
+                <div id="PerDay" style="width: 105%; height: 170px; position: relative; top: -75px; left: -15px"></div>
               </div>
             </div>
             <div v-if="selectedIconButtons === 1"></div>
@@ -450,7 +449,7 @@ setTimeout(() => {
         </div>
       </el-col>
       <!--右侧-->
-      <el-col :span="5">
+      <el-col :span="7">
         <el-card>
           <div class="div-header">
             <el-row :gutter="1">

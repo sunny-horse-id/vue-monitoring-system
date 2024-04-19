@@ -283,6 +283,102 @@ setTimeout(() => {
   monthPower();
   perDay();
 }, 1);
+
+// 日志数据
+const warningData = [
+  {
+    date: '2024-04-19 17:44:05',
+    place: '发电侧',
+    content: '流体PH过高'
+  },
+  {
+    date: '2024-04-19 17:44:05',
+    place: '发电侧',
+    content: '流体PH过高'
+  },
+  {
+    date: '2024-04-19 17:44:05',
+    place: '发电侧',
+    content: '流体PH过高'
+  },
+  {
+    date: '2024-04-19 17:44:05',
+    place: '发电侧',
+    content: '流体PH过高'
+  },
+  {
+    date: '2024-04-19 17:44:05',
+    place: '发电侧',
+    content: '流体PH过高'
+  },
+  {
+    date: '2024-04-19 17:44:05',
+    place: '发电侧',
+    content: '流体PH过高'
+  },
+  {
+    date: '2024-04-19 17:44:05',
+    place: '发电侧',
+    content: '流体PH过高'
+  },
+  {
+    date: '2024-04-19 17:44:05',
+    place: '发电侧',
+    content: '流体PH过高'
+  },
+  {
+    date: '2024-04-19 17:44:05',
+    place: '发电侧',
+    content: '流体PH过高'
+  },
+]
+const errorData = [
+  {
+    date: '2024-04-19 18:44:10',
+    place: '制氢侧',
+    content: '储气罐泄露'
+  },
+  {
+    date: '2024-04-19 18:44:10',
+    place: '制氢侧',
+    content: '储气罐泄露'
+  },
+  {
+    date: '2024-04-19 18:44:10',
+    place: '制氢侧',
+    content: '储气罐泄露'
+  },
+  {
+    date: '2024-04-19 18:44:10',
+    place: '制氢侧',
+    content: '储气罐泄露'
+  },
+  {
+    date: '2024-04-19 18:44:10',
+    place: '制氢侧',
+    content: '储气罐泄露'
+  },
+  {
+    date: '2024-04-19 18:44:10',
+    place: '制氢侧',
+    content: '储气罐泄露'
+  },
+  {
+    date: '2024-04-19 18:44:10',
+    place: '制氢侧',
+    content: '储气罐泄露'
+  },
+  {
+    date: '2024-04-19 18:44:10',
+    place: '制氢侧',
+    content: '储气罐泄露'
+  },
+  {
+    date: '2024-04-19 18:44:10',
+    place: '制氢侧',
+    content: '储气罐泄露'
+  },
+]
 </script>
 
 <template>
@@ -464,9 +560,22 @@ setTimeout(() => {
             </el-row>
           </div>
           <div style="margin-top: 10px">
-            <el-scrollbar height="350px">
-              <p style="font-size: smaller">2024-04-19 17:18:01 发电侧 线路老化</p>
-            </el-scrollbar>
+            <el-table :data="warningData" style="width: 100%" height="350px" v-if="logStore.logValue === 0">
+              <el-table-column fixed prop="date" label="时间" width="115" />
+              <el-table-column prop="place" label="位置" width="80" />
+              <el-table-column prop="content" label="内容" width="100" />
+              <el-table-column label="操作" width="100px">
+                <el-button type="success" round>已解决</el-button>
+              </el-table-column>
+            </el-table>
+            <el-table :data="errorData" style="width: 100%" height="350px" v-if="logStore.logValue === 1">
+              <el-table-column fixed prop="date" label="时间" width="115" />
+              <el-table-column prop="place" label="位置" width="80" />
+              <el-table-column prop="content" label="内容" width="100" />
+              <el-table-column label="操作" width="100px">
+                <el-button type="success" round>已解决</el-button>
+              </el-table-column>
+            </el-table>
           </div>
         </el-card>
         <el-dialog

@@ -144,13 +144,26 @@ function monthPower() {
     },
     xAxis: {type: 'category'},
     yAxis: {},
-    series: [{type: 'bar'}, {type: 'bar'}]
+    series: [
+      {
+        type: 'bar',
+        itemStyle: {
+          color: '#62D4CA' // 修改第一个柱子的颜色
+        }
+      },
+      {
+        type: 'bar',
+        itemStyle: {
+          color: '#80FFA5' // 修改第二个柱子的颜色
+        }
+      }
+    ]
   };
 
   option && myChart.setOption(option);
 }
 
-// 使用echarts绘制图表-当月每日发电量
+// 使用echarts绘制图表-近30天总发电与上网电量
 function perDay() {
   const chartDom = document.getElementById('PerDay');
   const myChart = echarts.init(chartDom);
@@ -354,7 +367,7 @@ setTimeout(() => {
           <!--总发电量-->
           <div class="box-text">
             <span class="normal-text">总发电量(上网电量)</span>
-            <span class="light-text">60%(<span style="color: #03fd82">50%</span>)</span>
+            <span class="light-text">60%(<span style="color: #80FFA5">30%</span>)</span>
           </div>
           <div class="calendar-bar-shadow">
             <div class="bar-light" style="width: 60%">
@@ -690,7 +703,7 @@ setTimeout(() => {
     .special-bar-light {
       position: relative;
       height: 10px;
-      background-color: #03fd82;
+      background-color: #80FFA5;
     }
   }
 }

@@ -464,6 +464,11 @@ setTimeout(() => {
               </el-col>
             </el-row>
           </div>
+          <div style="margin-top: 10px">
+            <el-scrollbar height="350px">
+              <p style="font-size: smaller">2024-04-19 17:18:01 发电侧 线路老化</p>
+            </el-scrollbar>
+          </div>
         </el-card>
         <el-dialog
             v-model="centerDialogVisible"
@@ -476,7 +481,7 @@ setTimeout(() => {
               <div style="font-weight: bold; font-size: x-large">警告</div>
             </div>
           </template>
-          <span>警告：系统发电侧出现故障，请尽快检查！</span>
+          <span>警告：系统出现故障，请尽快检查！</span>
           <template #footer>
             <div class="dialog-footer">
               <el-button type="danger" @click="centerDialogVisible = false">确定</el-button>

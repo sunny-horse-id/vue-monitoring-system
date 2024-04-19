@@ -37,14 +37,6 @@ function selectButton(index) {
   }
 }
 
-// 使用按钮选择报警
-const alarmButtons = ref(['发电侧', '储能侧', '制氢侧'])
-const selectedAlarmButtons = ref(0)
-
-function selectAlarmButtons(index) {
-  selectedAlarmButtons.value = index;
-}
-
 // 使用按钮选择图标图表
 const selectedIconButtons = ref(0)
 
@@ -459,7 +451,9 @@ setTimeout(() => {
                 <div class="bar"></div>
               </el-col>
               <el-col :span="22">
-                <p class="p-header">站点报警</p>
+                <p class="p-header">
+                  66
+                </p>
               </el-col>
             </el-row>
           </div>

@@ -1,5 +1,4 @@
 <script setup>
-
 </script>
 
 <template>
@@ -24,17 +23,12 @@
           <h1 class="h1">渗透能制氢实时检测系统</h1>
         </div>
         <el-row :gutter="20" class="el-header-row">
+          <el-col :span="8"></el-col>
           <el-col :span="3">
             <img src="@/assets/images/layout/refresh.png" alt="" class="header-img">
           </el-col>
-          <el-col :span="3">
-            <img src="@/assets/images/layout/full.png" alt="" class="header-img">
-          </el-col>
           <el-col :span="5">
-            <el-button type="success">普通</el-button>
-          </el-col>
-          <el-col :span="5">
-            <el-button type="warning">严重</el-button>
+            <el-button type="warning">故障</el-button>
           </el-col>
           <el-col :span="5">
             <el-button type="danger">事故</el-button>

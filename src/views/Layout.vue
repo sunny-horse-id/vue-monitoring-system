@@ -2,7 +2,7 @@
 import {useLogStore} from "@/stores/log.js";
 const logStore = useLogStore()
 function selectLog(index) {
-  logStore.getCategory(index)
+  logStore.getLog(index)
 }
 </script>
 

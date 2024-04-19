@@ -2,6 +2,13 @@
 // 引入相关依赖
 import {ref} from "vue";
 import * as echarts from 'echarts';
+import {useLogStore} from "@/stores/log.js";
+
+// 获取pinia全局数据
+const logStore = useLogStore()
+
+// 选择日志类型
+const logType = ref(['故障日志', '事故日志'])
 
 // 警告弹窗
 const centerDialogVisible = ref(false)
@@ -452,33 +459,10 @@ setTimeout(() => {
               </el-col>
               <el-col :span="22">
                 <p class="p-header">
-                  66
+                  {{logType[logStore.logValue]}}
                 </p>
               </el-col>
             </el-row>
-          </div>
-          <div style="display: flex;justify-content: space-between;margin-top: 15px">
-            <el-button
-                v-for="(button, index) in alarmButtons"
-                :key="index"
-                :plain="true"
-                :type="selectedAlarmButtons === index ? 'primary' : 'default'"
-                @click="selectAlarmButtons(index)"
-                style="width: 70px; height: 30px; margin: 4px; z-index: 999;"
-            >
-              {{ button }}
-            </el-button>
-          </div>
-          <div style="margin-top: 10px">
-            <div v-if="selectedAlarmButtons === 0">
-              666
-            </div>
-            <div v-else-if="selectedAlarmButtons === 1">
-              777
-            </div>
-            <div v-if="selectedAlarmButtons === 2">
-              888
-            </div>
           </div>
         </el-card>
         <el-dialog

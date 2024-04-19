@@ -1,4 +1,9 @@
 <script setup>
+import {useLogStore} from "@/stores/log.js";
+const logStore = useLogStore()
+function selectLog(index) {
+  logStore.getCategory(index)
+}
 </script>
 
 <template>
@@ -28,10 +33,10 @@
             <img src="@/assets/images/layout/refresh.png" alt="" class="header-img">
           </el-col>
           <el-col :span="5">
-            <el-button type="warning">故障</el-button>
+            <el-button type="warning" @click="selectLog(0)">故障</el-button>
           </el-col>
           <el-col :span="5">
-            <el-button type="danger">事故</el-button>
+            <el-button type="danger" @click="selectLog(1)">事故</el-button>
           </el-col>
           <el-col :span="3" class="el-col">
             <img src="@/assets/images/layout/people.png" alt="" class="header-img">

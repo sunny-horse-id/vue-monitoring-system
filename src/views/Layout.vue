@@ -36,15 +36,21 @@ function refresh() {
           <h1 class="h1">渗透能制氢实时检测系统</h1>
         </div>
         <el-row :gutter="20" class="el-header-row">
-          <el-col :span="8"></el-col>
+          <el-col :span="6"></el-col>
           <el-col :span="3">
             <img src="@/assets/images/layout/refresh.png" alt="" class="header-img" @click="refresh()">
           </el-col>
-          <el-col :span="5">
+          <el-col :span="6">
             <el-button type="warning" @click="selectLog(0)">故障</el-button>
+            <div style="border-radius: 10px; width: 30px; height: 20px; background-color: #E6A23D;position: absolute; left: 205px; top: -5px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
+              <span style="display: flex;justify-content: center;align-items: center;width: 100%;  color: white; font-size: small; font-weight: bold">22</span>
+            </div>
           </el-col>
-          <el-col :span="5">
+          <el-col :span="6">
             <el-button type="danger" @click="selectLog(1)">事故</el-button>
+            <div style="border-radius: 10px; width: 30px; height: 20px; background-color: #F36D6A;position: absolute; left: 305px; top: -5px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
+              <span style="display: flex;justify-content: center;align-items: center;width: 100%;  color: white; font-size: small; font-weight: bold">8</span>
+            </div>
           </el-col>
           <el-col :span="3" class="el-col">
             <img src="@/assets/images/layout/people.png" alt="" class="header-img">

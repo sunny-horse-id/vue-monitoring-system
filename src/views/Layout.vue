@@ -1,8 +1,16 @@
 <script setup>
+// 引入logStore
 import {useLogStore} from "@/stores/log.js";
+
+// 进行log选择
 const logStore = useLogStore()
 function selectLog(index) {
   logStore.getLog(index)
+}
+
+// 页面刷新
+function refresh() {
+  location.reload();
 }
 </script>
 
@@ -30,7 +38,7 @@ function selectLog(index) {
         <el-row :gutter="20" class="el-header-row">
           <el-col :span="8"></el-col>
           <el-col :span="3">
-            <img src="@/assets/images/layout/refresh.png" alt="" class="header-img">
+            <img src="@/assets/images/layout/refresh.png" alt="" class="header-img" @click="refresh()">
           </el-col>
           <el-col :span="5">
             <el-button type="warning" @click="selectLog(0)">故障</el-button>

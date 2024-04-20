@@ -468,10 +468,39 @@ function getErrTotalChart() {
   }
   option && myChart.setOption(option);
 }
+
 // 初始化加载绘制的图表
 setTimeout(() => {
   getErrChart();
 }, 1);
+
+// 修改上面表格的颜色
+// eslint-disable-next-line no-unused-vars
+function topTableCellStyle({row, column, rowIndex, columnIndex}) {
+  if (rowIndex === 4 && columnIndex === 2) {
+    return {background: 'red'}
+  }
+  if (rowIndex === 3 && columnIndex === 4) {
+    return {background: 'red'}
+  }
+  if (rowIndex === 1 && columnIndex === 6) {
+    return {background: 'red'}
+  }
+}
+
+// 修改下面表格的颜色
+// eslint-disable-next-line no-unused-vars
+function bottomTableCellStyle({row, column, rowIndex, columnIndex}) {
+  if (rowIndex === 1 && columnIndex === 2) {
+    return {background: 'red'}
+  }
+  if (rowIndex === 4 && columnIndex === 4) {
+    return {background: 'red'}
+  }
+  if (rowIndex === 2 && columnIndex === 5) {
+    return {background: 'red'}
+  }
+}
 </script>
 
 <template>
@@ -482,7 +511,7 @@ setTimeout(() => {
         style="width: 115px;position: absolute;z-index: 999; top:85px"
     />
     <el-table :data="totalData" style="width: 100%; position: relative; top: -5px" height="313px"
-              :row-style="{height:'55px'}">
+              :row-style="{height:'55px'}" :cell-style="topTableCellStyle">
       <el-table-column fixed prop="name" width="115"/>
       <el-table-column v-for="(item, index) in times" :key="index" :prop="'date_' + index" :label="item" width="100"/>
     </el-table>
@@ -496,7 +525,7 @@ setTimeout(() => {
     <el-col :span="15">
       <el-card style="height: 298px">
         <el-table :data="errData" style="width: 100%; position: relative; top: -10px" height="290px"
-                  :row-style="{height:'50px'}">
+                  :row-style="{height:'50px'}" :cell-style="bottomTableCellStyle">
           <el-table-column fixed prop="name" width="115"/>
           <el-table-column v-for="(item, index) in times" :key="index" :prop="'date_' + index" :label="item"
                            width="100"/>
@@ -506,8 +535,12 @@ setTimeout(() => {
     <el-col :span="9">
       <el-card style="height: 298px">
         <el-container style="position: relative; top: -5px">
-          <el-button :type="isShow ? 'success' : 'primary'" :plain="!isShow" @click="select(true)" style="z-index: 999">季度故障详细分布</el-button>
-          <el-button :type="!isShow ? 'success' : 'primary'" :plain="isShow" @click="select(false)" style="z-index: 999">季度故障总计</el-button>
+          <el-button :type="isShow ? 'success' : 'primary'" :plain="!isShow" @click="select(true)" style="z-index: 999">
+            季度故障详细分布
+          </el-button>
+          <el-button :type="!isShow ? 'success' : 'primary'" :plain="isShow" @click="select(false)"
+                     style="z-index: 999">季度故障总计
+          </el-button>
         </el-container>
         <div v-if="isShow===true" id="Err"
              style="width: 115%; height: 285px; position: relative; left: -20px; top:10px"></div>

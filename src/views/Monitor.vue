@@ -478,14 +478,36 @@ setTimeout(() => {
 // eslint-disable-next-line no-unused-vars
 function topTableCellStyle({row, column, rowIndex, columnIndex}) {
   if (rowIndex === 4 && columnIndex === 2) {
-    return {background: 'red'}
+    return {
+      textAlign: 'center',
+      background: 'red',
+      color: 'white',
+      borderRadius: '20px' // 背景区域的圆角
+    };
   }
   if (rowIndex === 3 && columnIndex === 4) {
-    return {background: 'red'}
+    return {
+      textAlign: 'center',
+      background: 'red',
+      color: 'white',
+      borderRadius: '20px' // 背景区域的圆角
+    };
   }
   if (rowIndex === 1 && columnIndex === 6) {
-    return {background: 'red'}
+    return {
+      textAlign: 'center',
+      background: 'red',
+      color: 'white',
+      borderRadius: '20px' // 背景区域的圆角
+    };
   }
+  return {textAlign: 'center',}
+}
+
+// 下面的表格的颜色
+// eslint-disable-next-line no-unused-vars
+function bottomTableCellStyle({row, column, rowIndex, columnIndex}) {
+  return {textAlign: 'center',}
 }
 </script>
 
@@ -498,8 +520,8 @@ function topTableCellStyle({row, column, rowIndex, columnIndex}) {
     />
     <el-table :data="totalData" style="width: 100%; position: relative; top: -5px" height="313px"
               :row-style="{height:'55px'}" :cell-style="topTableCellStyle">
-      <el-table-column fixed prop="name" width="115"/>
-      <el-table-column v-for="(item, index) in times" :key="index" :prop="'date_' + index" :label="item" width="100"/>
+      <el-table-column fixed prop="name" width="115" header-align="center"/>
+      <el-table-column v-for="(item, index) in times" :key="index" :prop="'date_' + index" :label="item" width="100" header-align="center"/>
     </el-table>
   </el-card>
   <el-row style="margin-top: 5px" :gutter="5">
@@ -511,10 +533,10 @@ function topTableCellStyle({row, column, rowIndex, columnIndex}) {
     <el-col :span="15">
       <el-card style="height: 298px">
         <el-table :data="errData" style="width: 100%; position: relative; top: -10px" height="290px"
-                  :row-style="{height:'50px'}">
-          <el-table-column fixed prop="name" width="115"/>
+                  :row-style="{height:'50px'}" :cell-style="bottomTableCellStyle">
+          <el-table-column fixed prop="name" width="115" header-align="center"/>
           <el-table-column v-for="(item, index) in times" :key="index" :prop="'date_' + index" :label="item"
-                           width="100"/>
+                           width="100" header-align="center"/>
         </el-table>
       </el-card>
     </el-col>

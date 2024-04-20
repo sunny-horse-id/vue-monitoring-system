@@ -9,7 +9,7 @@ const times = ref(['00:00', '00:10', '00:20', '00:30', '00:40', '00:50', '01:00'
 // 模拟总的数据
 const totalData = [
   {
-    name: '1',
+    name: '发电侧电压',
     date_0: 1,
     date_1: 1,
     date_2: 1,
@@ -31,7 +31,7 @@ const totalData = [
     date_18: 1,
   },
   {
-    name: '1',
+    name: '发电侧电流',
     date_0: 1,
     date_1: 1,
     date_2: 1,
@@ -53,7 +53,7 @@ const totalData = [
     date_18: 1,
   },
   {
-    name: '1',
+    name: '氢气罐压力',
     date_0: 1,
     date_1: 1,
     date_2: 1,
@@ -75,7 +75,7 @@ const totalData = [
     date_18: 1,
   },
   {
-    name: '1',
+    name: '储能侧健康度',
     date_0: 1,
     date_1: 1,
     date_2: 1,
@@ -97,7 +97,7 @@ const totalData = [
     date_18: 1,
   },
   {
-    name: '1',
+    name: '流体浓度梯度',
     date_0: 1,
     date_1: 1,
     date_2: 1,
@@ -189,7 +189,7 @@ const totalData = [
 // 模拟错误数据
 const errData = [
   {
-    name: '1',
+    name: '发电侧电压',
     date_0: 1,
     date_1: 1,
     date_2: 1,
@@ -211,7 +211,7 @@ const errData = [
     date_18: 1,
   },
   {
-    name: '1',
+    name: '发电侧电流',
     date_0: 1,
     date_1: 1,
     date_2: 1,
@@ -233,7 +233,7 @@ const errData = [
     date_18: 1,
   },
   {
-    name: '1',
+    name: '氢气罐压力',
     date_0: 1,
     date_1: 1,
     date_2: 1,
@@ -255,7 +255,7 @@ const errData = [
     date_18: 1,
   },
   {
-    name: '1',
+    name: '储能侧健康度',
     date_0: 1,
     date_1: 1,
     date_2: 1,
@@ -277,7 +277,7 @@ const errData = [
     date_18: 1,
   },
   {
-    name: '1',
+    name: '流体浓度梯度',
     date_0: 1,
     date_1: 1,
     date_2: 1,
@@ -439,7 +439,7 @@ setTimeout(() => {
         placeholder="2023-04-21"
         style="width: 115px;position: absolute;z-index: 999; top:85px"
     />
-    <el-table :data="totalData" style="width: 100%; position: relative; top: -5px" height="313px">
+    <el-table :data="totalData" style="width: 100%; position: relative; top: -5px" height="313px" :row-style="{height:'55px'}">
       <el-table-column fixed prop="name" width="115"/>
       <el-table-column v-for="(item, index) in times" :key="index" :prop="'date_' + index" :label="item" width="100"/>
     </el-table>
@@ -452,7 +452,7 @@ setTimeout(() => {
     />
     <el-col :span="15">
       <el-card style="height: 298px">
-        <el-table :data="errData" style="width: 100%; position: relative; top: -10px" height="290px">
+        <el-table :data="errData" style="width: 100%; position: relative; top: -10px" height="290px" :row-style="{height:'50px'}">
           <el-table-column fixed prop="name" width="115"/>
           <el-table-column v-for="(item, index) in times" :key="index" :prop="'date_' + index" :label="item"
                            width="100"/>

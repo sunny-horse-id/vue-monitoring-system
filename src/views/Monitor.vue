@@ -487,20 +487,6 @@ function topTableCellStyle({row, column, rowIndex, columnIndex}) {
     return {background: 'red'}
   }
 }
-
-// 修改下面表格的颜色
-// eslint-disable-next-line no-unused-vars
-function bottomTableCellStyle({row, column, rowIndex, columnIndex}) {
-  if (rowIndex === 1 && columnIndex === 2) {
-    return {background: 'red'}
-  }
-  if (rowIndex === 4 && columnIndex === 4) {
-    return {background: 'red'}
-  }
-  if (rowIndex === 2 && columnIndex === 5) {
-    return {background: 'red'}
-  }
-}
 </script>
 
 <template>
@@ -525,7 +511,7 @@ function bottomTableCellStyle({row, column, rowIndex, columnIndex}) {
     <el-col :span="15">
       <el-card style="height: 298px">
         <el-table :data="errData" style="width: 100%; position: relative; top: -10px" height="290px"
-                  :row-style="{height:'50px'}" :cell-style="bottomTableCellStyle">
+                  :row-style="{height:'50px'}">
           <el-table-column fixed prop="name" width="115"/>
           <el-table-column v-for="(item, index) in times" :key="index" :prop="'date_' + index" :label="item"
                            width="100"/>

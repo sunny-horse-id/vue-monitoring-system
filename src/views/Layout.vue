@@ -12,6 +12,7 @@ function selectLog(index) {
 function refresh() {
   location.reload();
 }
+
 </script>
 
 <template>
@@ -53,7 +54,17 @@ function refresh() {
             </div>
           </el-col>
           <el-col :span="3" class="el-col">
-            <img src="@/assets/images/layout/people.png" alt="" class="header-img">
+
+            <el-dropdown>
+              <el-button style="margin: 0; padding: 0; border: none;">
+                <img src="@/assets/images/layout/people.png" alt="" class="header-img">
+              </el-button>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item>退出登录</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
           </el-col>
         </el-row>
       </el-header>

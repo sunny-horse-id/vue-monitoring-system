@@ -2,24 +2,105 @@
 // 引入相关依赖
 import {ref} from "vue";
 import * as echarts from 'echarts';
+import 'echarts-liquidfill';
 import {useLogStore} from "@/stores/log.js";
+
+// 使用echarts绘制图表-氢气容量-左侧
+function liquidFillLeft() {
+  const chartDom = document.getElementById('LiquidFillChartLeft');
+  const myChart = echarts.init(chartDom);
+
+  // 模拟数据
+  const value = 0.4; // 表示填充百分比
+
+  const option = {
+    title: {
+      text: '电解水',
+      top: '20px',
+      left: '70px'
+    },
+    series: [{
+      type: 'liquidFill',
+      shape: 'roundRect',
+      data: [value, value, value],
+      radius: '70%',
+      outline: {
+        show: false
+      },
+      color: ['#00FFFF', '#00BFFF', '#1E90FF'],
+      backgroundStyle: {
+        color: '#666666' // 修改背景颜色为纯灰色
+      },
+      label: {
+        normal: {
+          textStyle: {
+            color: '#fff',
+            insideColor: 'yellow',
+            fontSize: 20
+          }
+        }
+      }
+    }]
+  };
+
+  option && myChart.setOption(option);
+}
+
+// 使用echarts绘制图表-氢气容量-右侧
+function liquidFillRight() {
+  const chartDom = document.getElementById('LiquidFillChartRight');
+  const myChart = echarts.init(chartDom);
+
+  // 模拟数据
+  const value = 0.6; // 表示填充百分比
+
+  const option = {
+    title: {
+      text: '糠醛',
+      top: '20px',
+      left: '70px'
+    },
+    series: [{
+      type: 'liquidFill',
+      shape: 'roundRect',
+      data: [value, value, value],
+      radius: '70%',
+      outline: {
+        show: false
+      },
+      color: ['#00FFFF', '#00BFFF', '#1E90FF'],
+      backgroundStyle: {
+        color: '#666666' // 修改背景颜色为纯灰色
+      },
+      label: {
+        normal: {
+          textStyle: {
+            color: '#fff',
+            insideColor: 'yellow',
+            fontSize: 20
+          }
+        }
+      }
+    }]
+  };
+
+  option && myChart.setOption(option);
+}
 
 // 获取pinia全局数据
 const logStore = useLogStore()
-
 // 选择日志类型
 const logType = ref(['故障日志', '事故日志'])
-
 // 警告弹窗
 const centerDialogVisible = ref(false)
-
 // 实时显示电流和功率
 const power = ref(200.1)
 const current = ref(48.6)
-
 // 使用按钮选择柱状图
 const buttons = ref(['分', '时', '日', '月', '年'])
 const selectedButton = ref(0)
+
+// 年月日时分秒进行选择
 function selectButton(index) {
   selectedButton.value = index;
   switch (index) {
@@ -29,22 +110,32 @@ function selectButton(index) {
       }, 1);
       break;
     case 1:
-      //perHour();
+      setTimeout(() => {
+        perHour();
+      }, 1);
       break;
     case 2:
-      //perDay();
+      setTimeout(() => {
+        perDays();
+      }, 1);
       break;
     case 3:
-      //perMonth();
+      setTimeout(() => {
+        perMonth();
+      }, 1);
       break;
     case 4:
-      //perYear();
+      setTimeout(() => {
+        perYear();
+      }, 1);
       break;
   }
 }
 
 // 使用按钮选择图标图表
 const selectedIconButtons = ref(0)
+
+// 使用按钮选择图标图表
 function selectIconButtons(index) {
   selectedIconButtons.value = index;
   switch (index) {
@@ -55,12 +146,25 @@ function selectIconButtons(index) {
       }, 1);
       break;
     case 1:
+      setTimeout(() => {
+        h2Rate();
+      }, 1);
       break
     case 2:
+      setTimeout(() => {
+        liquidFillLeft();
+        liquidFillRight()
+      }, 1);
       break
     case 3:
+      setTimeout(() => {
+        output();
+      }, 1);
       break
     case 4:
+      setTimeout(() => {
+        economyProfit();
+      }, 1);
       break
   }
 }
@@ -79,6 +183,19 @@ function perMinute() {
     yAxis: {
       type: 'value',
     },
+    tooltip: {
+      trigger: 'axis', // 设置触发类型为坐标轴触发
+      axisPointer: {
+        type: 'line', // 指示器类型为直线
+        label: {
+          show: true, // 显示标签
+          precision: 2, // 数据精度
+          formatter: function (params) { // 自定义标签内容
+            return params.value;
+          }
+        }
+      }
+    },
     series: [
       {
         data: [199, 197, 200, 210, 207, 205, 208],
@@ -91,6 +208,194 @@ function perMinute() {
           }, {
             offset: 1,
             color: 'rgba(5,143,241,0.3)' // Gradient end color
+          }])
+        }
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+}
+
+// 使用echarts绘制图表-每小时
+function perHour() {
+  const chartDom = document.getElementById('PerHour');
+  const myChart = echarts.init(chartDom);
+
+  const option = {
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+    },
+    yAxis: {
+      type: 'value',
+    },
+    tooltip: {
+      trigger: 'axis', // 设置触发类型为坐标轴触发
+      axisPointer: {
+        type: 'line', // 指示器类型为直线
+        label: {
+          show: true, // 显示标签
+          precision: 2, // 数据精度
+          formatter: function (params) { // 自定义标签内容
+            return params.value;
+          }
+        }
+      }
+    },
+    series: [
+      {
+        data: [199, 197, 200, 210, 207, 205, 208],
+        type: 'line',
+        smooth: true, // To make the line smooth
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: 'rgba(32,119,136,0.8)' // Gradient start color
+          }, {
+            offset: 1,
+            color: 'rgba(5,213,241,0.3)' // Gradient end color
+          }])
+        }
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+}
+
+// 使用echarts绘制图表-每天
+function perDays() {
+  const chartDom = document.getElementById('PerDays');
+  const myChart = echarts.init(chartDom);
+
+  const option = {
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+    },
+    yAxis: {
+      type: 'value',
+    },
+    tooltip: {
+      trigger: 'axis', // 设置触发类型为坐标轴触发
+      axisPointer: {
+        type: 'line', // 指示器类型为直线
+        label: {
+          show: true, // 显示标签
+          precision: 2, // 数据精度
+          formatter: function (params) { // 自定义标签内容
+            return params.value;
+          }
+        }
+      }
+    },
+    series: [
+      {
+        data: [199, 197, 200, 210, 207, 205, 208],
+        type: 'line',
+        smooth: true, // To make the line smooth
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: 'rgba(97,150,36,0.8)' // Gradient start color
+          }, {
+            offset: 1,
+            color: 'rgba(92,241,5,0.3)' // Gradient end color
+          }])
+        }
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+}
+
+// 使用echarts绘制图表-每月
+function perMonth() {
+  const chartDom = document.getElementById('PerMonth');
+  const myChart = echarts.init(chartDom);
+
+  const option = {
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+    },
+    yAxis: {
+      type: 'value',
+    },
+    tooltip: {
+      trigger: 'axis', // 设置触发类型为坐标轴触发
+      axisPointer: {
+        type: 'line', // 指示器类型为直线
+        label: {
+          show: true, // 显示标签
+          precision: 2, // 数据精度
+          formatter: function (params) { // 自定义标签内容
+            return params.value;
+          }
+        }
+      }
+    },
+    series: [
+      {
+        data: [199, 197, 200, 210, 207, 205, 208],
+        type: 'line',
+        smooth: true, // To make the line smooth
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: 'rgba(155,30,151,0.8)' // Gradient start color
+          }, {
+            offset: 1,
+            color: 'rgba(171,16,194,0.3)' // Gradient end color
+          }])
+        }
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+}
+
+// 使用echarts绘制图表-每年
+function perYear() {
+  const chartDom = document.getElementById('PerYear');
+  const myChart = echarts.init(chartDom);
+
+  const option = {
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+    },
+    yAxis: {
+      type: 'value',
+    },
+    tooltip: {
+      trigger: 'axis', // 设置触发类型为坐标轴触发
+      axisPointer: {
+        type: 'line', // 指示器类型为直线
+        label: {
+          show: true, // 显示标签
+          precision: 2, // 数据精度
+          formatter: function (params) { // 自定义标签内容
+            return params.value;
+          }
+        }
+      }
+    },
+    series: [
+      {
+        data: [199, 197, 200, 210, 207, 205, 208],
+        type: 'line',
+        smooth: true, // To make the line smooth
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: 'rgba(143,143,29,0.8)' // Gradient start color
+          }, {
+            offset: 1,
+            color: 'rgba(241,229,5,0.3)' // Gradient end color
           }])
         }
       }
@@ -267,13 +572,88 @@ function perDay() {
   option && myChart.setOption(option);
 }
 
+// 使用echarts绘制图表-制氢速率
+function h2Rate() {
+  const chartDom = document.getElementById('H2Rate');
+  const myChart = echarts.init(chartDom);
+
+  const option = {
+    color: ['#80FFA5'],
+    title: {
+      text: '制氢速率',
+      left: '15px'
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985'
+        }
+      }
+    },
+    legend: {
+      data: ['制氢速率'],
+      right: '20px'
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        boundaryGap: false,
+        data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    series: [
+      {
+        name: '制氢速率',
+        type: 'line',
+        stack: 'Total',
+        smooth: true,
+        lineStyle: {
+          width: 0
+        },
+        showSymbol: false,
+        areaStyle: {
+          opacity: 0.8,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgb(128, 255, 165)'
+            },
+            {
+              offset: 1,
+              color: 'rgb(1, 191, 236)'
+            }
+          ])
+        },
+        emphasis: {
+          focus: 'series'
+        },
+        data: [140, 232, 101, 264, 90, 340, 250]
+      }
+    ]
+  };
+
+  option && myChart.setOption(option);
+}
+
 // 初始化加载绘制的图表
 setTimeout(() => {
   perMinute();
   monthPower();
   perDay();
 }, 1);
-
 // 日志数据
 const warningData = [
   {
@@ -369,6 +749,172 @@ const errorData = [
     content: '储气罐泄露'
   },
 ]
+// 氢气容量表格数据
+const tableData = [
+  {
+    left: '100.2MPa',
+    name: '气压',
+    right: '100.6MPa',
+  },
+  {
+    left: '20℃',
+    name: '温度',
+    right: '20℃',
+  },
+  {
+    left: '20℃',
+    name: '温度',
+    right: '20℃',
+  },
+  {
+    left: '20℃',
+    name: '温度',
+    right: '20℃',
+  },
+  {
+    left: '20℃',
+    name: '温度',
+    right: '20℃',
+  },
+]
+// 氢气容量表格格式
+// eslint-disable-next-line no-unused-vars
+function tableCellStyle({row, column, rowIndex, columnIndex}) {
+  return {textAlign: 'center',}
+}
+
+// 使用echarts绘制图表-糠酸产量
+function output() {
+  const chartDom = document.getElementById('output');
+  const myChart = echarts.init(chartDom);
+
+  // prettier-ignore
+  const data = [["2000-06-05", 116], ["2000-06-06", 129], ["2000-06-07", 135], ["2000-06-08", 86], ["2000-06-09", 73], ["2000-06-10", 85], ["2000-06-11", 73], ["2000-06-12", 68], ["2000-06-13", 92], ["2000-06-14", 130], ["2000-06-15", 245], ["2000-06-16", 139], ["2000-06-17", 115], ["2000-06-18", 111], ["2000-06-19", 309], ["2000-06-20", 206], ["2000-06-21", 137], ["2000-06-22", 128], ["2000-06-23", 85], ["2000-06-24", 94], ["2000-06-25", 71], ["2000-06-26", 106], ["2000-06-27", 84], ["2000-06-28", 93], ["2000-06-29", 85], ["2000-06-30", 73], ["2000-07-01", 83], ["2000-07-02", 125], ["2000-07-03", 107], ["2000-07-04", 82], ["2000-07-05", 44], ["2000-07-06", 72], ["2000-07-07", 106], ["2000-07-08", 107], ["2000-07-09", 66], ["2000-07-10", 91], ["2000-07-11", 92], ["2000-07-12", 113], ["2000-07-13", 107], ["2000-07-14", 131], ["2000-07-15", 111], ["2000-07-16", 64], ["2000-07-17", 69], ["2000-07-18", 88], ["2000-07-19", 77], ["2000-07-20", 83], ["2000-07-21", 111], ["2000-07-22", 57], ["2000-07-23", 55], ["2000-07-24", 60]];
+  const dateList = data.map(function (item) {
+    return item[0];
+  });
+  const valueList = data.map(function (item) {
+    return item[1];
+  });
+  const option = {
+    // Make gradient line here
+    visualMap: [
+      {
+        show: false,
+        type: 'continuous',
+        seriesIndex: 0,
+        min: 0,
+        max: 400
+      }
+    ],
+    title: {
+      left: 'center',
+      text: '糠酸产量'
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    xAxis: {
+      data: dateList
+    },
+    yAxis: {},
+    series: [
+      {
+        type: 'line',
+        showSymbol: false,
+        data: valueList
+      }
+    ]
+  };
+
+  option && myChart.setOption(option);
+}
+
+// 使用echarts绘制图表-经济收益
+function economyProfit() {
+  const chartDom = document.getElementById('EconomyProfit');
+  const myChart = echarts.init(chartDom);
+  const option = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    legend: {},
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        data: ['2017', '2018', '2019', '2020', '2021', '2022', '2023']
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    series: [
+      {
+        name: '全年收益',
+        type: 'bar',
+        data: [862, 1018, 964, 1026, 1679, 1600, 1570],
+        emphasis: {
+          focus: 'series'
+        },
+        markLine: {
+          lineStyle: {
+            type: 'dashed'
+          },
+          data: [[{type: 'min'}, {type: 'max'}]]
+        }
+      },
+      {
+        name: '第一季度收益',
+        type: 'bar',
+        stack: 'Search Engine',
+        emphasis: {
+          focus: 'series'
+        },
+        data: [620, 732, 701, 734, 1090, 1130, 1120]
+      },
+      {
+        name: '第二季度收益',
+        type: 'bar',
+        stack: 'Search Engine',
+        emphasis: {
+          focus: 'series'
+        },
+        data: [120, 132, 101, 134, 290, 230, 220]
+      },
+      {
+        name: '第三季度收益',
+        type: 'bar',
+        stack: 'Search Engine',
+        emphasis: {
+          focus: 'series'
+        },
+        data: [60, 72, 71, 74, 190, 130, 110]
+      },
+      {
+        name: '第四季度收益',
+        type: 'bar',
+        stack: 'Search Engine',
+        emphasis: {
+          focus: 'series'
+        },
+        data: [62, 82, 91, 84, 109, 110, 120]
+      }
+    ]
+  };
+
+  option && myChart.setOption(option);
+}
 </script>
 
 <template>
@@ -483,16 +1029,39 @@ const errorData = [
           <el-card style="height: 100%">
             <div v-if="selectedIconButtons === 0">
               <div>
-                <div id="MonthPower" style="width: 118%; height: 210px; position: relative; top: -15px; left: -50px"></div>
+                <div id="MonthPower"
+                     style="width: 118%; height: 210px; position: relative; top: -15px; left: -50px"></div>
               </div>
               <div>
                 <div id="PerDay" style="width: 105%; height: 170px; position: relative; top: -75px; left: -15px"></div>
               </div>
             </div>
-            <div v-if="selectedIconButtons === 1"></div>
-            <div v-if="selectedIconButtons === 2"></div>
-            <div v-if="selectedIconButtons === 3"></div>
-            <div v-if="selectedIconButtons === 4"></div>
+            <div v-if="selectedIconButtons === 1">
+              <div id="H2Rate" style="width: 100%;height: 300px"></div>
+            </div>
+            <div v-if="selectedIconButtons === 2">
+              <el-row :gutter="10">
+                <el-col :span="7">
+                  <div id="LiquidFillChartLeft" style="width: 100%;height: 300px; margin-top: 20px"></div>
+                </el-col>
+                <el-col :span="10">
+                  <el-table :data="tableData" border style="width: 100%; margin-top: 30px" :cell-style="tableCellStyle">
+                    <el-table-column prop="left" label="电解水" width="95" header-align="center"/>
+                    <el-table-column prop="name" label="指标" width="95" header-align="center"/>
+                    <el-table-column prop="right" label="糠醛" header-align="center"/>
+                  </el-table>
+                </el-col>
+                <el-col :span="7">
+                  <div id="LiquidFillChartRight" style="width: 100%;height: 300px; margin-top: 20px"></div>
+                </el-col>
+              </el-row>
+            </div>
+            <div v-if="selectedIconButtons === 3">
+              <div id="output" style="width: 105%;height: 340px"></div>
+            </div>
+            <div v-if="selectedIconButtons === 4">
+              <div id="EconomyProfit" style="width: 105%;height: 300px; position: relative; left: -15px"></div>
+            </div>
           </el-card>
         </div>
         <div style="margin-top: 5px">
@@ -554,24 +1123,24 @@ const errorData = [
               </el-col>
               <el-col :span="22">
                 <p class="p-header">
-                  {{logType[logStore.logValue]}}
+                  {{ logType[logStore.logValue] }}
                 </p>
               </el-col>
             </el-row>
           </div>
           <div style="margin-top: 10px">
             <el-table :data="warningData" style="width: 100%" height="350px" v-if="logStore.logValue === 0">
-              <el-table-column fixed prop="date" label="时间" width="115" />
-              <el-table-column prop="place" label="位置" width="75" />
-              <el-table-column prop="content" label="内容" width="110" />
+              <el-table-column fixed prop="date" label="时间" width="115"/>
+              <el-table-column prop="place" label="位置" width="75"/>
+              <el-table-column prop="content" label="内容" width="110"/>
               <el-table-column label="操作" width="100px">
                 <el-button type="warning" round>解决</el-button>
               </el-table-column>
             </el-table>
             <el-table :data="errorData" style="width: 100%" height="350px" v-if="logStore.logValue === 1">
-              <el-table-column fixed prop="date" label="时间" width="115" />
-              <el-table-column prop="place" label="位置" width="75" />
-              <el-table-column prop="content" label="内容" width="110" />
+              <el-table-column fixed prop="date" label="时间" width="115"/>
+              <el-table-column prop="place" label="位置" width="75"/>
+              <el-table-column prop="content" label="内容" width="110"/>
               <el-table-column label="操作" width="100px">
                 <el-button type="danger" round>解决</el-button>
               </el-table-column>
@@ -660,10 +1229,10 @@ const errorData = [
               </el-col>
               <el-col :span="22">
                 <div v-if="selectedButton === 0" class="echarts-bar" id="PerMinute"></div>
-                <div v-else-if="selectedButton === 1"></div>
-                <div v-if="selectedButton === 2"></div>
-                <div v-else-if="selectedButton === 3"></div>
-                <div v-if="selectedButton === 4"></div>
+                <div v-else-if="selectedButton === 1" class="echarts-bar" id="PerHour"></div>
+                <div v-if="selectedButton === 2" class="echarts-bar" id="PerDays"></div>
+                <div v-else-if="selectedButton === 3" class="echarts-bar" id="PerMonth"></div>
+                <div v-if="selectedButton === 4" class="echarts-bar" id="PerYear"></div>
               </el-col>
             </el-row>
           </div>

@@ -44,13 +44,13 @@ const registerData = ref({
 //调用接口，注册
 const register = async () => {
   let result = await userRegisterService(registerData.value)
-  if (result.data.code) {
+  if (result.code) {
     // eslint-disable-next-line no-undef
-    ElMessage.error(result.data.message ? result.message : '注册失败')
+    ElMessage.error(result.message ? result.message : '注册失败')
     return
   }
   // eslint-disable-next-line no-undef
-  ElMessage.success(result.data.message ? result.message : '注册成功')
+  ElMessage.success(result.message ? result.message : '注册成功')
 }
 
 // 引入路由
@@ -61,7 +61,7 @@ const tokenStore = useTokenStore()
 const login = async () => {
   let result = await userLoginService(registerData.value)
   console.log(result)
-  if (result.data.code) {
+  if (result.code) {
     // eslint-disable-next-line no-undef
     ElMessage.error(result.data.message ? result.message : '登录失败')
     return

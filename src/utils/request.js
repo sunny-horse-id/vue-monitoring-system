@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { ElMessage } from 'element-plus'
-import { useTokenStore } from '@/stores/token';
 import router from '@/router';
 const baseURL = '/api';
 const instance = axios.create({ baseURL });
@@ -8,9 +7,10 @@ const instance = axios.create({ baseURL });
 //请求拦截器
 instance.interceptors.request.use(
     (config) => {
-        const tokenStore = useTokenStore()
-        if (tokenStore.token) {
-            config.headers.Authorization = tokenStore.token
+        const tokenStore = sessionStorage.getItem("token")
+        console.log(tokenStore)
+        if (tokenStore) {
+            config.headers.Authorization = tokenStore
         }
         return config
     },

@@ -4,7 +4,6 @@ import {User, Lock} from '@element-plus/icons-vue'
 import {ref} from 'vue'
 import {userRegisterService, userLoginService} from '@/api/user.js'
 import {useRouter} from 'vue-router'
-import {useTokenStore} from '@/stores/token'
 
 //控制注册与登录表单的显示， 默认显示注册
 const isRegister = ref(false)
@@ -57,7 +56,6 @@ const register = async () => {
 const router = useRouter()
 
 //登录
-const tokenStore = useTokenStore()
 const login = async () => {
   let result = await userLoginService(registerData.value)
   console.log(result)
@@ -68,7 +66,7 @@ const login = async () => {
   }
   // eslint-disable-next-line no-undef
   ElMessage.success(result.data.message ? result.message : '登录成功')
-  tokenStore.setToken(result.data)
+  sessionStorage.setItem('token', result.data)
   router.push('/')
 }
 

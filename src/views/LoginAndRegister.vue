@@ -46,11 +46,11 @@ const register = async () => {
   let result = await userRegisterService(registerData.value)
   if (result.data.code) {
     // eslint-disable-next-line no-undef
-    ElMessage.error(result.message ? result.message : '注册失败')
+    ElMessage.error(result.data.message ? result.message : '注册失败')
     return
   }
   // eslint-disable-next-line no-undef
-  ElMessage.success(result.message ? result.message : '注册成功')
+  ElMessage.success(result.data.message ? result.message : '注册成功')
 }
 
 // 引入路由
@@ -63,11 +63,11 @@ const login = async () => {
   console.log(result)
   if (result.data.code) {
     // eslint-disable-next-line no-undef
-    ElMessage.error(result.message ? result.message : '登录失败')
+    ElMessage.error(result.data.message ? result.message : '登录失败')
     return
   }
   // eslint-disable-next-line no-undef
-  ElMessage.success(result.message ? result.message : '登录成功')
+  ElMessage.success(result.data.message ? result.message : '登录成功')
   tokenStore.setToken(result.data)
   router.push('/')
 }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ElMessage } from 'element-plus'
 import { useTokenStore } from '@/stores/token';
 import router from '@/router';
 const baseURL = '/api';
@@ -21,20 +22,17 @@ instance.interceptors.request.use(
 //响应拦截器
 instance.interceptors.response.use(
     result => {
-        if (result.code === 0) {
+        if (result.data.code === 0) {
             return result.data
         }
-        // eslint-disable-next-line no-undef
         ElMessage.error(result.data.message ? result.data.message : '服务异常')
         return Promise.reject(result.data);
     },
     err => {
         if (err.response.status === 401) {
-            // eslint-disable-next-line no-undef
             ElMessage.error('请先登录');
             router.push('/login')
         } else {
-            // eslint-disable-next-line no-undef
             ElMessage.error('服务异常');
         }
         return Promise.reject(err);

@@ -5,6 +5,7 @@ import * as echarts from 'echarts';
 import 'echarts-liquidfill';
 import {useLogStore} from "@/stores/log.js";
 
+/* ECharts绘制图表 */
 // 使用echarts绘制图表-氢气容量-左侧
 function liquidFillLeft() {
   const chartDom = document.getElementById('LiquidFillChartLeft');
@@ -45,7 +46,6 @@ function liquidFillLeft() {
 
   option && myChart.setOption(option);
 }
-
 // 使用echarts绘制图表-氢气容量-右侧
 function liquidFillRight() {
   const chartDom = document.getElementById('LiquidFillChartRight');
@@ -86,89 +86,6 @@ function liquidFillRight() {
 
   option && myChart.setOption(option);
 }
-
-// 获取pinia全局数据
-const logStore = useLogStore()
-// 选择日志类型
-const logType = ref(['故障日志', '事故日志'])
-// 警告弹窗
-const centerDialogVisible = ref(false)
-// 实时显示电流和功率
-const power = ref(200.1)
-const current = ref(48.6)
-// 使用按钮选择柱状图
-const buttons = ref(['分', '时', '日', '月', '年'])
-const selectedButton = ref(0)
-
-// 年月日时分秒进行选择
-function selectButton(index) {
-  selectedButton.value = index;
-  switch (index) {
-    case 0:
-      setTimeout(() => {
-        perMinute();
-      }, 1);
-      break;
-    case 1:
-      setTimeout(() => {
-        perHour();
-      }, 1);
-      break;
-    case 2:
-      setTimeout(() => {
-        perDays();
-      }, 1);
-      break;
-    case 3:
-      setTimeout(() => {
-        perMonth();
-      }, 1);
-      break;
-    case 4:
-      setTimeout(() => {
-        perYear();
-      }, 1);
-      break;
-  }
-}
-
-// 使用按钮选择图标图表
-const selectedIconButtons = ref(0)
-
-// 使用按钮选择图标图表
-function selectIconButtons(index) {
-  selectedIconButtons.value = index;
-  switch (index) {
-    case 0:
-      setTimeout(() => {
-        monthPower();
-        perDay();
-      }, 1);
-      break;
-    case 1:
-      setTimeout(() => {
-        h2Rate();
-      }, 1);
-      break
-    case 2:
-      setTimeout(() => {
-        liquidFillLeft();
-        liquidFillRight()
-      }, 1);
-      break
-    case 3:
-      setTimeout(() => {
-        output();
-      }, 1);
-      break
-    case 4:
-      setTimeout(() => {
-        economyProfit();
-      }, 1);
-      break
-  }
-}
-
 // 使用echarts绘制图表-每分钟
 function perMinute() {
   const chartDom = document.getElementById('PerMinute');
@@ -215,7 +132,6 @@ function perMinute() {
   };
   option && myChart.setOption(option);
 }
-
 // 使用echarts绘制图表-每小时
 function perHour() {
   const chartDom = document.getElementById('PerHour');
@@ -262,7 +178,6 @@ function perHour() {
   };
   option && myChart.setOption(option);
 }
-
 // 使用echarts绘制图表-每天
 function perDays() {
   const chartDom = document.getElementById('PerDays');
@@ -309,7 +224,6 @@ function perDays() {
   };
   option && myChart.setOption(option);
 }
-
 // 使用echarts绘制图表-每月
 function perMonth() {
   const chartDom = document.getElementById('PerMonth');
@@ -356,7 +270,6 @@ function perMonth() {
   };
   option && myChart.setOption(option);
 }
-
 // 使用echarts绘制图表-每年
 function perYear() {
   const chartDom = document.getElementById('PerYear');
@@ -403,7 +316,6 @@ function perYear() {
   };
   option && myChart.setOption(option);
 }
-
 // 使用echarts绘制图表-月发电量
 function monthPower() {
   const chartDom = document.getElementById('MonthPower');
@@ -456,7 +368,6 @@ function monthPower() {
 
   option && myChart.setOption(option);
 }
-
 // 使用echarts绘制图表-近30天总发电与上网电量
 function perDay() {
   const chartDom = document.getElementById('PerDay');
@@ -571,7 +482,6 @@ function perDay() {
 
   option && myChart.setOption(option);
 }
-
 // 使用echarts绘制图表-制氢速率
 function h2Rate() {
   const chartDom = document.getElementById('H2Rate');
@@ -647,13 +557,168 @@ function h2Rate() {
 
   option && myChart.setOption(option);
 }
+// 使用echarts绘制图表-糠酸产量
+function output() {
+  const chartDom = document.getElementById('output');
+  const myChart = echarts.init(chartDom);
 
+  // prettier-ignore
+  const data = [["2000-06-05", 116], ["2000-06-06", 129], ["2000-06-07", 135], ["2000-06-08", 86], ["2000-06-09", 73], ["2000-06-10", 85], ["2000-06-11", 73], ["2000-06-12", 68], ["2000-06-13", 92], ["2000-06-14", 130], ["2000-06-15", 245], ["2000-06-16", 139], ["2000-06-17", 115], ["2000-06-18", 111], ["2000-06-19", 309], ["2000-06-20", 206], ["2000-06-21", 137], ["2000-06-22", 128], ["2000-06-23", 85], ["2000-06-24", 94], ["2000-06-25", 71], ["2000-06-26", 106], ["2000-06-27", 84], ["2000-06-28", 93], ["2000-06-29", 85], ["2000-06-30", 73], ["2000-07-01", 83], ["2000-07-02", 125], ["2000-07-03", 107], ["2000-07-04", 82], ["2000-07-05", 44], ["2000-07-06", 72], ["2000-07-07", 106], ["2000-07-08", 107], ["2000-07-09", 66], ["2000-07-10", 91], ["2000-07-11", 92], ["2000-07-12", 113], ["2000-07-13", 107], ["2000-07-14", 131], ["2000-07-15", 111], ["2000-07-16", 64], ["2000-07-17", 69], ["2000-07-18", 88], ["2000-07-19", 77], ["2000-07-20", 83], ["2000-07-21", 111], ["2000-07-22", 57], ["2000-07-23", 55], ["2000-07-24", 60]];
+  const dateList = data.map(function (item) {
+    return item[0];
+  });
+  const valueList = data.map(function (item) {
+    return item[1];
+  });
+  const option = {
+    // Make gradient line here
+    visualMap: [
+      {
+        show: false,
+        type: 'continuous',
+        seriesIndex: 0,
+        min: 0,
+        max: 400
+      }
+    ],
+    title: {
+      left: 'center',
+      text: '糠酸产量'
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    xAxis: {
+      data: dateList
+    },
+    yAxis: {},
+    series: [
+      {
+        type: 'line',
+        showSymbol: false,
+        data: valueList
+      }
+    ]
+  };
+
+  option && myChart.setOption(option);
+}
+// 使用echarts绘制图表-经济收益
+function economyProfit() {
+  const chartDom = document.getElementById('EconomyProfit');
+  const myChart = echarts.init(chartDom);
+  const option = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    legend: {},
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        data: ['2017', '2018', '2019', '2020', '2021', '2022', '2023']
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    series: [
+      {
+        name: '全年收益',
+        type: 'bar',
+        data: [862, 1018, 964, 1026, 1679, 1600, 1570],
+        emphasis: {
+          focus: 'series'
+        },
+        markLine: {
+          lineStyle: {
+            type: 'dashed'
+          },
+          data: [[{type: 'min'}, {type: 'max'}]]
+        }
+      },
+      {
+        name: '第一季度收益',
+        type: 'bar',
+        stack: 'Search Engine',
+        emphasis: {
+          focus: 'series'
+        },
+        data: [620, 732, 701, 734, 1090, 1130, 1120]
+      },
+      {
+        name: '第二季度收益',
+        type: 'bar',
+        stack: 'Search Engine',
+        emphasis: {
+          focus: 'series'
+        },
+        data: [120, 132, 101, 134, 290, 230, 220]
+      },
+      {
+        name: '第三季度收益',
+        type: 'bar',
+        stack: 'Search Engine',
+        emphasis: {
+          focus: 'series'
+        },
+        data: [60, 72, 71, 74, 190, 130, 110]
+      },
+      {
+        name: '第四季度收益',
+        type: 'bar',
+        stack: 'Search Engine',
+        emphasis: {
+          focus: 'series'
+        },
+        data: [62, 82, 91, 84, 109, 110, 120]
+      }
+    ]
+  };
+
+  option && myChart.setOption(option);
+}
 // 初始化加载绘制的图表
 setTimeout(() => {
   perMinute();
   monthPower();
   perDay();
 }, 1);
+
+
+/* 表格样式控制 */
+// 氢气容量表格格式
+// eslint-disable-next-line no-unused-vars
+function tableCellStyle({row, column, rowIndex, columnIndex}) {
+  return {textAlign: 'center',}
+}
+
+
+/* 数据定义 */
+// 获取pinia全局数据
+const logStore = useLogStore()
+// 选择日志类型
+const logType = ref(['故障日志', '事故日志'])
+// 警告弹窗
+const centerDialogVisible = ref(false)
+// 实时显示电流和功率
+const power = ref(200.1)
+const current = ref(48.6)
+// 使用按钮选择图标图表
+const selectedIconButtons = ref(0)
+// 年月日时分秒进行选择
+const buttons = ref(['分', '时', '日', '月', '年'])
+const selectedButton = ref(0)
 // 日志数据
 const warningData = [
   {
@@ -777,143 +842,72 @@ const tableData = [
     right: '20℃',
   },
 ]
-// 氢气容量表格格式
-// eslint-disable-next-line no-unused-vars
-function tableCellStyle({row, column, rowIndex, columnIndex}) {
-  return {textAlign: 'center',}
+
+
+/* 按钮控制函数 */
+//年月日时分选择函数
+function selectButton(index) {
+  selectedButton.value = index;
+  switch (index) {
+    case 0:
+      setTimeout(() => {
+        perMinute();
+      }, 1);
+      break;
+    case 1:
+      setTimeout(() => {
+        perHour();
+      }, 1);
+      break;
+    case 2:
+      setTimeout(() => {
+        perDays();
+      }, 1);
+      break;
+    case 3:
+      setTimeout(() => {
+        perMonth();
+      }, 1);
+      break;
+    case 4:
+      setTimeout(() => {
+        perYear();
+      }, 1);
+      break;
+  }
 }
-
-// 使用echarts绘制图表-糠酸产量
-function output() {
-  const chartDom = document.getElementById('output');
-  const myChart = echarts.init(chartDom);
-
-  // prettier-ignore
-  const data = [["2000-06-05", 116], ["2000-06-06", 129], ["2000-06-07", 135], ["2000-06-08", 86], ["2000-06-09", 73], ["2000-06-10", 85], ["2000-06-11", 73], ["2000-06-12", 68], ["2000-06-13", 92], ["2000-06-14", 130], ["2000-06-15", 245], ["2000-06-16", 139], ["2000-06-17", 115], ["2000-06-18", 111], ["2000-06-19", 309], ["2000-06-20", 206], ["2000-06-21", 137], ["2000-06-22", 128], ["2000-06-23", 85], ["2000-06-24", 94], ["2000-06-25", 71], ["2000-06-26", 106], ["2000-06-27", 84], ["2000-06-28", 93], ["2000-06-29", 85], ["2000-06-30", 73], ["2000-07-01", 83], ["2000-07-02", 125], ["2000-07-03", 107], ["2000-07-04", 82], ["2000-07-05", 44], ["2000-07-06", 72], ["2000-07-07", 106], ["2000-07-08", 107], ["2000-07-09", 66], ["2000-07-10", 91], ["2000-07-11", 92], ["2000-07-12", 113], ["2000-07-13", 107], ["2000-07-14", 131], ["2000-07-15", 111], ["2000-07-16", 64], ["2000-07-17", 69], ["2000-07-18", 88], ["2000-07-19", 77], ["2000-07-20", 83], ["2000-07-21", 111], ["2000-07-22", 57], ["2000-07-23", 55], ["2000-07-24", 60]];
-  const dateList = data.map(function (item) {
-    return item[0];
-  });
-  const valueList = data.map(function (item) {
-    return item[1];
-  });
-  const option = {
-    // Make gradient line here
-    visualMap: [
-      {
-        show: false,
-        type: 'continuous',
-        seriesIndex: 0,
-        min: 0,
-        max: 400
-      }
-    ],
-    title: {
-      left: 'center',
-      text: '糠酸产量'
-    },
-    tooltip: {
-      trigger: 'axis'
-    },
-    xAxis: {
-      data: dateList
-    },
-    yAxis: {},
-    series: [
-      {
-        type: 'line',
-        showSymbol: false,
-        data: valueList
-      }
-    ]
-  };
-
-  option && myChart.setOption(option);
-}
-
-// 使用echarts绘制图表-经济收益
-function economyProfit() {
-  const chartDom = document.getElementById('EconomyProfit');
-  const myChart = echarts.init(chartDom);
-  const option = {
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow'
-      }
-    },
-    legend: {},
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
-    },
-    xAxis: [
-      {
-        type: 'category',
-        data: ['2017', '2018', '2019', '2020', '2021', '2022', '2023']
-      }
-    ],
-    yAxis: [
-      {
-        type: 'value'
-      }
-    ],
-    series: [
-      {
-        name: '全年收益',
-        type: 'bar',
-        data: [862, 1018, 964, 1026, 1679, 1600, 1570],
-        emphasis: {
-          focus: 'series'
-        },
-        markLine: {
-          lineStyle: {
-            type: 'dashed'
-          },
-          data: [[{type: 'min'}, {type: 'max'}]]
-        }
-      },
-      {
-        name: '第一季度收益',
-        type: 'bar',
-        stack: 'Search Engine',
-        emphasis: {
-          focus: 'series'
-        },
-        data: [620, 732, 701, 734, 1090, 1130, 1120]
-      },
-      {
-        name: '第二季度收益',
-        type: 'bar',
-        stack: 'Search Engine',
-        emphasis: {
-          focus: 'series'
-        },
-        data: [120, 132, 101, 134, 290, 230, 220]
-      },
-      {
-        name: '第三季度收益',
-        type: 'bar',
-        stack: 'Search Engine',
-        emphasis: {
-          focus: 'series'
-        },
-        data: [60, 72, 71, 74, 190, 130, 110]
-      },
-      {
-        name: '第四季度收益',
-        type: 'bar',
-        stack: 'Search Engine',
-        emphasis: {
-          focus: 'series'
-        },
-        data: [62, 82, 91, 84, 109, 110, 120]
-      }
-    ]
-  };
-
-  option && myChart.setOption(option);
+// 使用按钮选择图标图表
+function selectIconButtons(index) {
+  selectedIconButtons.value = index;
+  switch (index) {
+    case 0:
+      setTimeout(() => {
+        monthPower();
+        perDay();
+      }, 1);
+      break;
+    case 1:
+      setTimeout(() => {
+        h2Rate();
+      }, 1);
+      break
+    case 2:
+      setTimeout(() => {
+        liquidFillLeft();
+        liquidFillRight()
+      }, 1);
+      break
+    case 3:
+      setTimeout(() => {
+        output();
+      }, 1);
+      break
+    case 4:
+      setTimeout(() => {
+        economyProfit();
+      }, 1);
+      break
+  }
 }
 </script>
 

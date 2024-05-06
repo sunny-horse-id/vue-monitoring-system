@@ -21,7 +21,7 @@ instance.interceptors.request.use(
 //响应拦截器
 instance.interceptors.response.use(
     result => {
-        if (result.data.code === 0) {
+        if (result.code === 0) {
             return result.data
         }
         // eslint-disable-next-line no-undef

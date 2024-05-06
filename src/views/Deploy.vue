@@ -704,6 +704,73 @@ function tableCellStyle({row, column, rowIndex, columnIndex}) {
 }
 
 
+/* 按钮控制函数 */
+//年月日时分选择函数
+function selectButton(index) {
+  selectedButton.value = index;
+  switch (index) {
+    case 0:
+      setTimeout(() => {
+        perMinute();
+      }, 1);
+      break;
+    case 1:
+      setTimeout(() => {
+        perHour();
+      }, 1);
+      break;
+    case 2:
+      setTimeout(() => {
+        perDays();
+      }, 1);
+      break;
+    case 3:
+      setTimeout(() => {
+        perMonth();
+      }, 1);
+      break;
+    case 4:
+      setTimeout(() => {
+        perYear();
+      }, 1);
+      break;
+  }
+}
+// 使用按钮选择图标图表
+function selectIconButtons(index) {
+  selectedIconButtons.value = index;
+  switch (index) {
+    case 0:
+      setTimeout(() => {
+        monthPower();
+        perDay();
+      }, 1);
+      break;
+    case 1:
+      setTimeout(() => {
+        h2Rate();
+      }, 1);
+      break
+    case 2:
+      setTimeout(() => {
+        liquidFillLeft();
+        liquidFillRight()
+      }, 1);
+      break
+    case 3:
+      setTimeout(() => {
+        output();
+      }, 1);
+      break
+    case 4:
+      setTimeout(() => {
+        economyProfit();
+      }, 1);
+      break
+  }
+}
+
+
 /* 数据定义 */
 // 获取pinia全局数据
 const logStore = useLogStore()
@@ -844,71 +911,6 @@ const tableData = [
 ]
 
 
-/* 按钮控制函数 */
-//年月日时分选择函数
-function selectButton(index) {
-  selectedButton.value = index;
-  switch (index) {
-    case 0:
-      setTimeout(() => {
-        perMinute();
-      }, 1);
-      break;
-    case 1:
-      setTimeout(() => {
-        perHour();
-      }, 1);
-      break;
-    case 2:
-      setTimeout(() => {
-        perDays();
-      }, 1);
-      break;
-    case 3:
-      setTimeout(() => {
-        perMonth();
-      }, 1);
-      break;
-    case 4:
-      setTimeout(() => {
-        perYear();
-      }, 1);
-      break;
-  }
-}
-// 使用按钮选择图标图表
-function selectIconButtons(index) {
-  selectedIconButtons.value = index;
-  switch (index) {
-    case 0:
-      setTimeout(() => {
-        monthPower();
-        perDay();
-      }, 1);
-      break;
-    case 1:
-      setTimeout(() => {
-        h2Rate();
-      }, 1);
-      break
-    case 2:
-      setTimeout(() => {
-        liquidFillLeft();
-        liquidFillRight()
-      }, 1);
-      break
-    case 3:
-      setTimeout(() => {
-        output();
-      }, 1);
-      break
-    case 4:
-      setTimeout(() => {
-        economyProfit();
-      }, 1);
-      break
-  }
-}
 </script>
 
 <template>

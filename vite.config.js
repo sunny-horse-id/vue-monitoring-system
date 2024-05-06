@@ -28,8 +28,8 @@ export default defineConfig({
     proxy: {
       //拦截所有包含/api的链接
       '/api': {
-        //转换的目标链接将5173转为5017，由前端发送
-        target: 'http://localhost:5017',
+        //转换的目标链接将5173转为8080，由前端发送
+        target: 'http://localhost:8080',
         //是否换源，true则转化
         changeOrigin: true,
         //使得转换后的链接中的/api变成空字符串

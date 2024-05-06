@@ -1,14 +1,14 @@
 <script setup>
+// 导入相关依赖
+import {User, Lock} from '@element-plus/icons-vue'
 import {ref} from 'vue'
+import {userRegisterService, userLoginService} from '@/api/user.js'
+import {useRouter} from 'vue-router'
+import {useTokenStore} from '@/stores/token'
+
 //控制注册与登录表单的显示， 默认显示注册
 const isRegister = ref(false)
-// 注册
-//定义数据模型
-const registerData = ref({
-  username: '',
-  password: '',
-  rePassword: ''
-})
+
 //校验密码的函数
 const checkRePassword = function (rule, value, callback) {
   if (value === '') {
@@ -32,6 +32,44 @@ const rules = {
   rePassword: [
     {validator: checkRePassword, trigger: 'blur'}
   ]
+}
+
+//定义数据模型
+const registerData = ref({
+  username: '',
+  password: '',
+  rePassword: ''
+})
+
+//调用接口，注册
+const register = async () => {
+  let result = await userRegisterService(registerData.value)
+  if (result.data.code) {
+    // eslint-disable-next-line no-undef
+    ElMessage.error(result.message ? result.message : '注册失败')
+    return
+  }
+  // eslint-disable-next-line no-undef
+  ElMessage.success(result.message ? result.message : '注册成功')
+}
+
+// 引入路由
+const router = useRouter()
+
+//登录
+const tokenStore = useTokenStore()
+const login = async () => {
+  let result = await userLoginService(registerData.value)
+  console.log(result)
+  if (result.data.code) {
+    // eslint-disable-next-line no-undef
+    ElMessage.error(result.message ? result.message : '登录失败')
+    return
+  }
+  // eslint-disable-next-line no-undef
+  ElMessage.success(result.message ? result.message : '登录成功')
+  tokenStore.setToken(result.data)
+  router.push('/')
 }
 
 //清空数据

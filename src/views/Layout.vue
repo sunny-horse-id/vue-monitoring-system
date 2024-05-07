@@ -6,6 +6,7 @@ import router from "@/router/index.js";
 // 进行log选择
 const logStore = useLogStore()
 function selectLog(index) {
+  router.push("/")
   logStore.setLog(index)
 }
 

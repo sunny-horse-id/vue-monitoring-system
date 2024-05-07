@@ -21,7 +21,7 @@ const logout = () => {
   router.push("/login")
   setTimeout(() => {
     window.location.reload();
-  }, 100)
+  }, 300)
 }
 </script>
 

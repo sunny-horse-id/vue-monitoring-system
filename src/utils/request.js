@@ -32,6 +32,9 @@ instance.interceptors.response.use(
         if (err.response.status === 401) {
             ElMessage.error('请先登录');
             router.push('/login')
+            setTimeout(() => {
+                window.location.reload();
+            }, 300)
         } else {
             ElMessage.error('服务异常');
         }

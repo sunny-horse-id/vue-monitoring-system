@@ -1,6 +1,7 @@
 <script setup>
 // 引入logStore
 import {useLogStore} from "@/stores/log.js";
+import router from "@/router/index.js";
 
 // 进行log选择
 const logStore = useLogStore()
@@ -17,9 +18,10 @@ function refresh() {
 // 退出登录功能的实现
 const logout = () => {
   sessionStorage.removeItem("token")
+  router.push("/login")
   setTimeout(() => {
     window.location.reload();
-  }, 500)
+  }, 100)
 }
 </script>
 

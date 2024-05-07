@@ -1,9 +1,12 @@
 <script setup>
 // 引入相关依赖
-import {ref} from "vue";
+import {ref, onMounted} from "vue";
 import * as echarts from 'echarts';
 import 'echarts-liquidfill';
 import {useLogStore} from "@/stores/log.js";
+import {getPerSecondAPI} from "@/api/power.js";
+import {getHourAPI} from "@/api/hour.js";
+
 
 /* ECharts绘制图表 */
 // 使用echarts绘制图表-氢气容量-左侧
@@ -46,6 +49,7 @@ function liquidFillLeft() {
 
   option && myChart.setOption(option);
 }
+
 // 使用echarts绘制图表-氢气容量-右侧
 function liquidFillRight() {
   const chartDom = document.getElementById('LiquidFillChartRight');
@@ -86,6 +90,7 @@ function liquidFillRight() {
 
   option && myChart.setOption(option);
 }
+
 // 使用echarts绘制图表-每分钟
 function perMinute() {
   const chartDom = document.getElementById('PerMinute');
@@ -132,6 +137,7 @@ function perMinute() {
   };
   option && myChart.setOption(option);
 }
+
 // 使用echarts绘制图表-每小时
 function perHour() {
   const chartDom = document.getElementById('PerHour');
@@ -178,6 +184,7 @@ function perHour() {
   };
   option && myChart.setOption(option);
 }
+
 // 使用echarts绘制图表-每天
 function perDays() {
   const chartDom = document.getElementById('PerDays');
@@ -224,6 +231,7 @@ function perDays() {
   };
   option && myChart.setOption(option);
 }
+
 // 使用echarts绘制图表-每月
 function perMonth() {
   const chartDom = document.getElementById('PerMonth');
@@ -270,6 +278,7 @@ function perMonth() {
   };
   option && myChart.setOption(option);
 }
+
 // 使用echarts绘制图表-每年
 function perYear() {
   const chartDom = document.getElementById('PerYear');
@@ -316,6 +325,7 @@ function perYear() {
   };
   option && myChart.setOption(option);
 }
+
 // 使用echarts绘制图表-月发电量
 function monthPower() {
   const chartDom = document.getElementById('MonthPower');
@@ -368,6 +378,7 @@ function monthPower() {
 
   option && myChart.setOption(option);
 }
+
 // 使用echarts绘制图表-近30天总发电与上网电量
 function perDay() {
   const chartDom = document.getElementById('PerDay');
@@ -482,6 +493,7 @@ function perDay() {
 
   option && myChart.setOption(option);
 }
+
 // 使用echarts绘制图表-制氢速率
 function h2Rate() {
   const chartDom = document.getElementById('H2Rate');
@@ -557,6 +569,7 @@ function h2Rate() {
 
   option && myChart.setOption(option);
 }
+
 // 使用echarts绘制图表-糠酸产量
 function output() {
   const chartDom = document.getElementById('output');
@@ -603,6 +616,7 @@ function output() {
 
   option && myChart.setOption(option);
 }
+
 // 使用echarts绘制图表-经济收益
 function economyProfit() {
   const chartDom = document.getElementById('EconomyProfit');
@@ -688,6 +702,7 @@ function economyProfit() {
 
   option && myChart.setOption(option);
 }
+
 // 初始化加载绘制的图表
 setTimeout(() => {
   perMinute();
@@ -736,6 +751,7 @@ function selectButton(index) {
       break;
   }
 }
+
 // 使用按钮选择图标图表
 function selectIconButtons(index) {
   selectedIconButtons.value = index;
@@ -779,7 +795,7 @@ const logType = ref(['故障日志', '事故日志'])
 // 警告弹窗
 const centerDialogVisible = ref(false)
 // 实时显示电流和功率
-const power = ref(200.1)
+const power = ref(200.0)
 const current = ref(48.6)
 // 使用按钮选择图标图表
 const selectedIconButtons = ref(0)
@@ -909,8 +925,33 @@ const tableData = [
     right: '20℃',
   },
 ]
+// 小时数
+const hour = ref(2140)
 
-
+/* API接口调用获取数据 */
+// 获取当前秒的功率
+const getPerSecondData = async () => {
+  const res = await getPerSecondAPI(power.value)
+  power.value = res.data
+}
+// 获取使用小时数
+const getHourData = async () => {
+  const res = await getHourAPI()
+  hour.value = res.data
+}
+// 挂载时调用
+onMounted(() => {
+  getPerSecondData()
+  getHourData()
+  // 每三秒调用一次
+  setInterval(() => {
+    getPerSecondData()
+  }, 3000)
+  // 每隔一个小时调用一次
+  setInterval(() => {
+    getHourData()
+  }, 1000 * 60 * 60)
+})
 </script>
 
 <template>
@@ -943,14 +984,14 @@ const tableData = [
             </div>
             <div class="div-normal">
               <img src="@/assets/images/Deploy/hours.png" alt="" class="div-img">
-              <p class="div-p">连续使用小时数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2140h</p>
+              <p class="div-p">连续使用小时数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ hour }}h</p>
             </div>
           </div>
           <el-row :gutter="20">
             <el-col :span="12" class="el-col-center" style="padding: 0">
               <div>
                 <div style="text-align: center;">
-                  <div class="special-p">{{ power }}</div>
+                  <div class="special-p">{{ power.toFixed(2) }}</div>
                 </div>
                 <div style="text-align: center;">
                   实时发电功率(kW)

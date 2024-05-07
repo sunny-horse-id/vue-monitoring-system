@@ -58,7 +58,6 @@ const router = useRouter()
 //登录
 const login = async () => {
   let result = await userLoginService(registerData.value)
-  console.log(result)
   if (result.code) {
     // eslint-disable-next-line no-undef
     ElMessage.error(result.data.message ? result.message : '登录失败')

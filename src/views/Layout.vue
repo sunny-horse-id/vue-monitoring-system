@@ -13,6 +13,14 @@ function refresh() {
   location.reload();
 }
 
+
+// 退出登录功能的实现
+const logout = () => {
+  sessionStorage.removeItem("token")
+  setTimeout(() => {
+    window.location.reload();
+  }, 500)
+}
 </script>
 
 <template>
@@ -61,7 +69,7 @@ function refresh() {
               </el-button>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item>退出登录</el-dropdown-item>
+                  <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>

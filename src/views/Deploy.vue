@@ -6,7 +6,8 @@ import 'echarts-liquidfill';
 import {useLogStore} from "@/stores/log.js";
 import {getPerSecondAPI} from "@/api/power.js";
 import {getHourAPI} from "@/api/hour.js";
-import {getLogListAPI} from "@/api/log.js";
+import {deleteLogAPI, getLogListAPI} from "@/api/log.js";
+import {getIndicatorsAPI} from "@/api/indicators.js";
 
 
 /* ECharts绘制图表 */
@@ -836,6 +837,13 @@ const tableData = [
 ]
 // 小时数
 const hour = ref(2140)
+// 指标数据
+const indicators = ref({
+  temperature: 9.5,
+  flowRate: 4.3,
+  density: 50,
+  ph: 8.2,
+})
 
 /* API接口调用获取数据 */
 // 获取当前秒的功率
@@ -851,7 +859,6 @@ const getHourData = async () => {
 // 获取日志信息
 const getLogListData = async (type) => {
   const res = await getLogListAPI(type)
-  console.log(res)
   if (type) {
     errorData.value = res.data
     logStore.setErrLogLength(errorData.value.length)
@@ -860,7 +867,16 @@ const getLogListData = async (type) => {
     logStore.setWarningLogLength(warningData.value.length)
   }
 }
-
+// 删除日志
+const deleteLogData = async (id, type) => {
+  await deleteLogAPI(id)
+  getLogListData(type)
+}
+// 获取指标数据
+const getIndicatorsData = async () => {
+  const res = await getIndicatorsAPI(indicators.value)
+  indicators.value = res.data
+}
 // 监听log的变化获取对应日志
 watch(logStore, (newValue) => {
   getLogListData(newValue.logValue)
@@ -871,9 +887,11 @@ onMounted(() => {
   getLogListData(1)
   getPerSecondData()
   getHourData()
+  getIndicatorsData()
   // 每三秒调用一次
   setInterval(() => {
     getPerSecondData()
+    getIndicatorsData()
   }, 3000)
   // 每隔一个小时调用一次
   setInterval(() => {
@@ -1098,16 +1116,16 @@ onMounted(() => {
               <el-table-column fixed prop="occurrenceTime" label="时间" width="115"/>
               <el-table-column prop="occurrencePlace" label="位置" width="75"/>
               <el-table-column prop="content" label="内容" width="110"/>
-              <el-table-column label="操作" width="100px">
-                <el-button type="warning" round>解决</el-button>
+              <el-table-column label="操作" width="100px" v-slot="scope">
+                <el-button type="warning" round @click="deleteLogData(scope.row.id, scope.row.type)">解决</el-button>
               </el-table-column>
             </el-table>
             <el-table :data="errorData" style="width: 100%" height="350px" v-if="logStore.logValue === 1">
               <el-table-column fixed prop="occurrenceTime" label="时间" width="115"/>
               <el-table-column prop="occurrencePlace" label="位置" width="75"/>
               <el-table-column prop="content" label="内容" width="110"/>
-              <el-table-column label="操作" width="100px">
-                <el-button type="danger" round>解决</el-button>
+              <el-table-column label="操作" width="100px" v-slot="scope">
+                <el-button type="danger" round @click="deleteLogData(scope.row.id, scope.row.type)">解决</el-button>
               </el-table-column>
             </el-table>
           </div>
@@ -1141,24 +1159,24 @@ onMounted(() => {
             <el-col :span="12" class="footer-left-item">
               <img src="@/assets/images/Deploy/temperature.png" alt="" class="item-img">
               <span class="item-text-top">流体温度</span>
-              <span class="item-text-bottom">9.5℃</span>
+              <span class="item-text-bottom">{{ indicators.temperature.toFixed(1) }}℃</span>
             </el-col>
             <el-col :span="12" class="footer-left-item">
               <img src="@/assets/images/Deploy/velocity.png" alt="" class="item-img">
               <span class="item-text-top">液体流速</span>
-              <span class="item-text-bottom">3.4km/h</span>
+              <span class="item-text-bottom">{{ indicators.flowRate.toFixed(1) }}km/h</span>
             </el-col>
           </el-row>
           <el-row :gutter="10" style="height: 45%; margin-top: 5px">
             <el-col :span="12" class="footer-left-item">
               <img src="@/assets/images/Deploy/concentration.png" alt="" class="item-img">
               <span class="item-text-top">浓度梯度</span>
-              <span class="item-text-bottom">50</span>
+              <span class="item-text-bottom">{{ indicators.density.toFixed(0) }}</span>
             </el-col>
             <el-col :span="12" class="footer-left-item">
               <img src="@/assets/images/Deploy/ph.png" alt="" class="item-img">
               <span class="item-text-top">流体pH</span>
-              <span class="item-text-bottom">8.2</span>
+              <span class="item-text-bottom">{{ indicators.ph.toFixed(1) }}</span>
             </el-col>
           </el-row>
         </el-card>

@@ -8,7 +8,6 @@ const instance = axios.create({ baseURL });
 instance.interceptors.request.use(
     (config) => {
         const tokenStore = sessionStorage.getItem("token")
-        console.log(tokenStore)
         if (tokenStore) {
             config.headers.Authorization = tokenStore
         }

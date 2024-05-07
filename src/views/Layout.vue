@@ -6,14 +6,13 @@ import router from "@/router/index.js";
 // 进行log选择
 const logStore = useLogStore()
 function selectLog(index) {
-  logStore.getLog(index)
+  logStore.setLog(index)
 }
 
 // 页面刷新
 function refresh() {
   location.reload();
 }
-
 
 // 退出登录功能的实现
 const logout = () => {
@@ -54,13 +53,13 @@ const logout = () => {
           <el-col :span="6">
             <el-button type="warning" @click="selectLog(0)">故障</el-button>
             <div style="border-radius: 10px; width: 30px; height: 20px; background-color: #E6A23D;position: absolute; left: 205px; top: -5px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
-              <span style="display: flex;justify-content: center;align-items: center;width: 100%;  color: white; font-size: small; font-weight: bold">22</span>
+              <span style="display: flex;justify-content: center;align-items: center;width: 100%;  color: white; font-size: small; font-weight: bold">{{ logStore.warningLogLength }}</span>
             </div>
           </el-col>
           <el-col :span="6">
             <el-button type="danger" @click="selectLog(1)">事故</el-button>
             <div style="border-radius: 10px; width: 30px; height: 20px; background-color: #F36D6A;position: absolute; left: 305px; top: -5px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
-              <span style="display: flex;justify-content: center;align-items: center;width: 100%;  color: white; font-size: small; font-weight: bold">8</span>
+              <span style="display: flex;justify-content: center;align-items: center;width: 100%;  color: white; font-size: small; font-weight: bold">{{ logStore.errLogLength }}</span>
             </div>
           </el-col>
           <el-col :span="3" class="el-col">

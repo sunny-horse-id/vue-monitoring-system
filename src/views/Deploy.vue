@@ -1,11 +1,12 @@
 <script setup>
 // 引入相关依赖
-import {ref, onMounted} from "vue";
+import {ref, onMounted, watch} from "vue";
 import * as echarts from 'echarts';
 import 'echarts-liquidfill';
 import {useLogStore} from "@/stores/log.js";
 import {getPerSecondAPI} from "@/api/power.js";
 import {getHourAPI} from "@/api/hour.js";
+import {getLogListAPI} from "@/api/log.js";
 
 
 /* ECharts绘制图表 */
@@ -803,100 +804,8 @@ const selectedIconButtons = ref(0)
 const buttons = ref(['分', '时', '日', '月', '年'])
 const selectedButton = ref(0)
 // 日志数据
-const warningData = [
-  {
-    date: '2023-07-19 17:44:05',
-    place: '发电侧',
-    content: '流体PH过高'
-  },
-  {
-    date: '2023-06-12 15:33:11',
-    place: '制氢侧',
-    content: '氢气压力过低'
-  },
-  {
-    date: '2023-04-19 12:21:09',
-    place: '储能侧',
-    content: '电压过高'
-  },
-  {
-    date: '2023-03-02 06:55:01',
-    place: '储能侧',
-    content: '电压过低'
-  },
-  {
-    date: '2023-01-31 08:32:19',
-    place: '发电侧',
-    content: '装置剧烈抖动'
-  },
-  {
-    date: '2024-04-19 17:44:05',
-    place: '发电侧',
-    content: '流体PH过高'
-  },
-  {
-    date: '2024-04-19 17:44:05',
-    place: '发电侧',
-    content: '流体PH过高'
-  },
-  {
-    date: '2024-04-19 17:44:05',
-    place: '发电侧',
-    content: '流体PH过高'
-  },
-  {
-    date: '2024-04-19 17:44:05',
-    place: '发电侧',
-    content: '流体PH过高'
-  },
-]
-const errorData = [
-  {
-    date: '2024-04-19 18:44:10',
-    place: '制氢侧',
-    content: '储气罐泄露'
-  },
-  {
-    date: '2024-04-19 18:44:10',
-    place: '制氢侧',
-    content: '储气罐泄露'
-  },
-  {
-    date: '2024-04-19 18:44:10',
-    place: '制氢侧',
-    content: '储气罐泄露'
-  },
-  {
-    date: '2024-04-19 18:44:10',
-    place: '制氢侧',
-    content: '储气罐泄露'
-  },
-  {
-    date: '2024-04-19 18:44:10',
-    place: '制氢侧',
-    content: '储气罐泄露'
-  },
-  {
-    date: '2024-04-19 18:44:10',
-    place: '制氢侧',
-    content: '储气罐泄露'
-  },
-  {
-    date: '2024-04-19 18:44:10',
-    place: '制氢侧',
-    content: '储气罐泄露'
-  },
-  {
-    date: '2024-04-19 18:44:10',
-    place: '制氢侧',
-    content: '储气罐泄露'
-  },
-  {
-    date: '2024-04-19 18:44:10',
-    place: '制氢侧',
-    content: '储气罐泄露'
-  },
-]
+const warningData = ref([])
+const errorData = ref([])
 // 氢气容量表格数据
 const tableData = [
   {
@@ -939,8 +848,27 @@ const getHourData = async () => {
   const res = await getHourAPI()
   hour.value = res.data
 }
+// 获取日志信息
+const getLogListData = async (type) => {
+  const res = await getLogListAPI(type)
+  console.log(res)
+  if (type) {
+    errorData.value = res.data
+    logStore.setErrLogLength(errorData.value.length)
+  } else {
+    warningData.value = res.data
+    logStore.setWarningLogLength(warningData.value.length)
+  }
+}
+
+// 监听log的变化获取对应日志
+watch(logStore, (newValue) => {
+  getLogListData(newValue.logValue)
+});
 // 挂载时调用
 onMounted(() => {
+  getLogListData(0)
+  getLogListData(1)
   getPerSecondData()
   getHourData()
   // 每三秒调用一次
@@ -1167,16 +1095,16 @@ onMounted(() => {
           </div>
           <div style="margin-top: 10px">
             <el-table :data="warningData" style="width: 100%" height="350px" v-if="logStore.logValue === 0">
-              <el-table-column fixed prop="date" label="时间" width="115"/>
-              <el-table-column prop="place" label="位置" width="75"/>
+              <el-table-column fixed prop="occurrenceTime" label="时间" width="115"/>
+              <el-table-column prop="occurrencePlace" label="位置" width="75"/>
               <el-table-column prop="content" label="内容" width="110"/>
               <el-table-column label="操作" width="100px">
                 <el-button type="warning" round>解决</el-button>
               </el-table-column>
             </el-table>
             <el-table :data="errorData" style="width: 100%" height="350px" v-if="logStore.logValue === 1">
-              <el-table-column fixed prop="date" label="时间" width="115"/>
-              <el-table-column prop="place" label="位置" width="75"/>
+              <el-table-column fixed prop="occurrenceTime" label="时间" width="115"/>
+              <el-table-column prop="occurrencePlace" label="位置" width="75"/>
               <el-table-column prop="content" label="内容" width="110"/>
               <el-table-column label="操作" width="100px">
                 <el-button type="danger" round>解决</el-button>

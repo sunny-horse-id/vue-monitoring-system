@@ -1,6 +1,6 @@
 <script setup>
 // 引入相关依赖
-import {ref, onMounted, watch} from "vue";
+import {onMounted, ref, watch, computed} from "vue";
 import * as echarts from 'echarts';
 import 'echarts-liquidfill';
 import {useLogStore} from "@/stores/log.js";
@@ -8,6 +8,7 @@ import {getPerSecondAPI} from "@/api/power.js";
 import {getHourAPI} from "@/api/hour.js";
 import {deleteLogAPI, getLogListAPI} from "@/api/log.js";
 import {getIndicatorsAPI} from "@/api/indicators.js";
+import {getHydrogenAPI} from "@/api/hydrogen.js";
 
 
 /* ECharts绘制图表 */
@@ -504,7 +505,7 @@ function h2Rate() {
   const option = {
     color: ['#80FFA5'],
     title: {
-      text: '制氢速率',
+      text: '制氢速率(kg/分)',
       left: '15px'
     },
     tooltip: {
@@ -530,7 +531,7 @@ function h2Rate() {
       {
         type: 'category',
         boundaryGap: false,
-        data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+        data: h2RateList.value.date
       }
     ],
     yAxis: [
@@ -564,7 +565,7 @@ function h2Rate() {
         emphasis: {
           focus: 'series'
         },
-        data: [140, 232, 101, 264, 90, 340, 250]
+        data: h2RateList.value.rate
       }
     ]
   };
@@ -765,7 +766,8 @@ function selectIconButtons(index) {
       }, 1);
       break;
     case 1:
-      setTimeout(() => {
+      setTimeout(async () => {
+        await getHydrogenData();
         h2Rate();
       }, 1);
       break
@@ -844,6 +846,8 @@ const indicators = ref({
   density: 50,
   ph: 8.2,
 })
+// 氢气速率
+const h2RateList = ref()
 
 /* API接口调用获取数据 */
 // 获取当前秒的功率
@@ -876,6 +880,26 @@ const deleteLogData = async (id, type) => {
 const getIndicatorsData = async () => {
   const res = await getIndicatorsAPI(indicators.value)
   indicators.value = res.data
+}
+// 获取当前的小时和分钟组成的时间
+const getTime = () => {
+  // 创建一个新的日期对象
+  const now = new Date();
+  // 获取小时数
+  let hour = now.getHours();
+  // 获取分钟数
+  let minute = now.getMinutes();
+  // 如果分钟或小时小于10，则在数字前添加一个零
+  hour = hour < 10 ? '0' + hour : hour;
+  minute = minute < 10 ? '0' + minute : minute;
+  // 将小时和分钟拼接成所需的格式，比如"13:01"
+  return hour + ':' + minute
+}
+// 获取氢气速率
+const getHydrogenData = async () => {
+  const date = getTime()
+  const res = await getHydrogenAPI(date)
+  h2RateList.value = res.data
 }
 // 监听log的变化获取对应日志
 watch(logStore, (newValue) => {

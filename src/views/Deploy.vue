@@ -4,7 +4,7 @@ import {onMounted, ref, watch} from "vue";
 import * as echarts from 'echarts';
 import 'echarts-liquidfill';
 import {useLogStore} from "@/stores/log.js";
-import {getPerSecondAPI} from "@/api/power.js";
+import {getPerHourAPI, getPerMinuteAPI, getPerSecondAPI} from "@/api/power.js";
 import {getHourAPI} from "@/api/hour.js";
 import {deleteLogAPI, getLogListAPI} from "@/api/log.js";
 import {getIndicatorsAPI} from "@/api/indicators.js";
@@ -103,7 +103,7 @@ function perMinute() {
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+      data: perMinutePower.value.date
     },
     yAxis: {
       type: 'value',
@@ -123,7 +123,7 @@ function perMinute() {
     },
     series: [
       {
-        data: [199, 197, 200, 210, 207, 205, 208],
+        data: perMinutePower.value.rate,
         type: 'line',
         smooth: true, // To make the line smooth
         areaStyle: {
@@ -150,7 +150,7 @@ function perHour() {
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+      data: perHourPower.value.date
     },
     yAxis: {
       type: 'value',
@@ -170,7 +170,7 @@ function perHour() {
     },
     series: [
       {
-        data: [199, 197, 200, 210, 207, 205, 208],
+        data: perHourPower.value.rate,
         type: 'line',
         smooth: true, // To make the line smooth
         areaStyle: {
@@ -197,7 +197,7 @@ function perDays() {
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+      data: ['1', '2', '3', '4', '5', '6', '7']
     },
     yAxis: {
       type: 'value',
@@ -217,7 +217,7 @@ function perDays() {
     },
     series: [
       {
-        data: [199, 197, 200, 210, 207, 205, 208],
+        data: [199.23, 200.38, 200.88, 201.07, 200.89, 199.99, 200.11],
         type: 'line',
         smooth: true, // To make the line smooth
         areaStyle: {
@@ -244,7 +244,7 @@ function perMonth() {
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+      data: ['1', '2', '3', '4', '5', '6', '7']
     },
     yAxis: {
       type: 'value',
@@ -264,7 +264,7 @@ function perMonth() {
     },
     series: [
       {
-        data: [199, 197, 200, 210, 207, 205, 208],
+        data: [199.49, 200.66, 200.85, 201.01, 200.55, 201.42, 200.72],
         type: 'line',
         smooth: true, // To make the line smooth
         areaStyle: {
@@ -291,7 +291,7 @@ function perYear() {
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: ['12:30', '12:40', '12:50', '13:00', '13:10', '13:20', '13:30']
+      data: ['2017', '2018', '2019', '2020', '2021', '2022', '2023']
     },
     yAxis: {
       type: 'value',
@@ -311,7 +311,7 @@ function perYear() {
     },
     series: [
       {
-        data: [199, 197, 200, 210, 207, 205, 208],
+        data: [200.12, 200.84, 200.85, 201.55, 200.67, 199.89, 200.67],
         type: 'line',
         smooth: true, // To make the line smooth
         areaStyle: {
@@ -707,7 +707,8 @@ function economyProfit() {
 }
 
 // 初始化加载绘制的图表
-setTimeout(() => {
+setTimeout(async () => {
+  await getPerMinuteData()
   perMinute();
   monthPower();
   perDay();
@@ -733,7 +734,8 @@ function selectButton(index) {
       }, 1);
       break;
     case 1:
-      setTimeout(() => {
+      setTimeout(async () => {
+        await getPerHourData()
         perHour();
       }, 1);
       break;
@@ -848,6 +850,11 @@ const indicators = ref({
 })
 // 氢气速率
 const h2RateList = ref()
+// 每分钟的功率
+const perMinutePower = ref()
+// 每小时功率
+const perHourPower = ref()
+
 
 /* API接口调用获取数据 */
 // 获取当前秒的功率
@@ -900,6 +907,16 @@ const getHydrogenData = async () => {
   const date = getTime()
   const res = await getHydrogenAPI(date)
   h2RateList.value = res.data
+}
+// 获取每分钟功率
+const getPerMinuteData = async () => {
+  const res = await getPerMinuteAPI(getTime())
+  perMinutePower.value = res.data
+}
+// 获取每小时功率
+const getPerHourData = async () => {
+  const res = await getPerHourAPI(getTime())
+  perHourPower.value = res.data
 }
 // 监听log的变化获取对应日志
 watch(logStore, (newValue) => {

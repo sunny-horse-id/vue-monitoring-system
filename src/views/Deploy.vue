@@ -1,6 +1,6 @@
 <script setup>
 // 引入相关依赖
-import {onMounted, ref, watch, computed} from "vue";
+import {onMounted, ref, watch} from "vue";
 import * as echarts from 'echarts';
 import 'echarts-liquidfill';
 import {useLogStore} from "@/stores/log.js";

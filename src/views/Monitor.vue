@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted} from "vue";
+import { ref, watch, nextTick, onMounted } from 'vue';
 import * as echarts from 'echarts';
 import {getDataAPI} from "@/api/data.js";
 
@@ -275,14 +275,24 @@ function bottomTableCellStyle({row, column, rowIndex, columnIndex}) {
 }
 
 // 选择日期
-
+const selectedDate = ref('2023-4-21'); // 初始化选择的日期为空
+watch(selectedDate, newValue => {
+  nextTick(() => {
+    const input = document.querySelector('.el-input__inner');
+    if (input) {
+      input.placeholder = newValue;
+    }
+    getDataData()
+  });
+});
 </script>
 
 <template>
   <el-card>
     <el-date-picker
+        v-model="selectedDate"
         type="date"
-        placeholder="2023-04-21"
+        :clearable="false"
         style="width: 115px;position: absolute;z-index: 999; top:85px"
     />
     <el-table :data="totalData" style="width: 100%; position: relative; top: -5px" height="313px"
@@ -294,8 +304,9 @@ function bottomTableCellStyle({row, column, rowIndex, columnIndex}) {
   </el-card>
   <el-row style="margin-top: 5px" :gutter="5">
     <el-date-picker
+        v-model="selectedDate"
         type="date"
-        placeholder="2023-04-21"
+        :clearable="false"
         style="width: 115px;position: absolute;z-index: 999; top:15px; left: 20px"
     />
     <el-col :span="15">

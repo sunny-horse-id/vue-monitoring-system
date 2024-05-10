@@ -10,7 +10,6 @@ import {deleteLogAPI, getLogListAPI} from "@/api/log.js";
 import {getIndicatorsAPI} from "@/api/indicators.js";
 import {getHydrogenAPI} from "@/api/hydrogen.js";
 
-
 /* ECharts绘制图表 */
 // 使用echarts绘制图表-氢气容量-左侧
 function liquidFillLeft() {

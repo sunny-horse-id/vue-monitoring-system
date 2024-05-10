@@ -2,6 +2,8 @@
 import { ref, watch, nextTick, onMounted } from 'vue';
 import * as echarts from 'echarts';
 import {getDataAPI} from "@/api/data.js";
+import {getLogListAPI} from "@/api/log.js";
+import {useLogStore} from "@/stores/log.js";
 
 // 使用按钮控制柱状图
 const isShow = ref(true)
@@ -37,6 +39,8 @@ onMounted(async () => {
   await getTimes();
   await getDataData();
   getErrData()
+  getLogListData(0)
+  getLogListData(1)
 })
 
 let mySet = ref(new Set())
@@ -285,6 +289,15 @@ watch(selectedDate, newValue => {
     getDataData()
   });
 });
+const logStore = useLogStore()
+const getLogListData = async (type) => {
+  const res = await getLogListAPI(type)
+  if (type) {
+    logStore.setErrLogLength(res.data.length)
+  } else {
+    logStore.setWarningLogLength(res.data.length)
+  }
+}
 </script>
 
 <template>

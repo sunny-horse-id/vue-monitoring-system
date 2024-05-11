@@ -57,6 +57,7 @@ const router = useRouter()
 
 //登录
 const login = async () => {
+  sessionStorage.setItem('username', registerData.value.username)
   let result = await userLoginService(registerData.value)
   if (result.code) {
     // eslint-disable-next-line no-undef

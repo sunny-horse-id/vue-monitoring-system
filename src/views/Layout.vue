@@ -5,6 +5,7 @@ import router from "@/router/index.js";
 
 // 进行log选择
 const logStore = useLogStore()
+
 function selectLog(index) {
   router.push("/")
   logStore.setLog(index)
@@ -23,6 +24,7 @@ const logout = () => {
     window.location.reload();
   }, 300)
 }
+const username = sessionStorage.getItem('username');
 </script>
 
 <template>
@@ -34,9 +36,11 @@ const logout = () => {
         <el-menu-item class="el-menu-item" index="/deploy">
           <img src="../assets/images/layout/deploy.png" alt="" class="img">
         </el-menu-item>
-        <el-menu-item class="el-menu-item" index="/monitor">
-          <img src="../assets/images/layout/monitor.png" alt="" class="img">
-        </el-menu-item>
+        <template v-if="username === 'ziyang'">
+          <el-menu-item class="el-menu-item" index="/monitor">
+            <img src="../assets/images/layout/monitor.png" alt="" class="img">
+          </el-menu-item>
+        </template>
       </el-menu>
     </el-aside>
     <!--右侧主区域-->
@@ -53,14 +57,22 @@ const logout = () => {
           </el-col>
           <el-col :span="6">
             <el-button type="warning" @click="selectLog(0)">故障</el-button>
-            <div style="border-radius: 10px; width: 30px; height: 20px; background-color: #E6A23D;position: absolute; left: 205px; top: -5px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
-              <span style="display: flex;justify-content: center;align-items: center;width: 100%;  color: white; font-size: small; font-weight: bold">{{ logStore.warningLogLength }}</span>
+            <div
+                style="border-radius: 10px; width: 30px; height: 20px; background-color: #E6A23D;position: absolute; left: 205px; top: -5px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
+              <span
+                  style="display: flex;justify-content: center;align-items: center;width: 100%;  color: white; font-size: small; font-weight: bold">{{
+                  logStore.warningLogLength
+                }}</span>
             </div>
           </el-col>
           <el-col :span="6">
             <el-button type="danger" @click="selectLog(1)">事故</el-button>
-            <div style="border-radius: 10px; width: 30px; height: 20px; background-color: #F36D6A;position: absolute; left: 305px; top: -5px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
-              <span style="display: flex;justify-content: center;align-items: center;width: 100%;  color: white; font-size: small; font-weight: bold">{{ logStore.errLogLength }}</span>
+            <div
+                style="border-radius: 10px; width: 30px; height: 20px; background-color: #F36D6A;position: absolute; left: 305px; top: -5px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
+              <span
+                  style="display: flex;justify-content: center;align-items: center;width: 100%;  color: white; font-size: small; font-weight: bold">{{
+                  logStore.errLogLength
+                }}</span>
             </div>
           </el-col>
           <el-col :span="3" class="el-col">
@@ -80,7 +92,7 @@ const logout = () => {
       </el-header>
       <!--主要区域-->
       <el-main style="padding: 5px">
-        <RouterView />
+        <RouterView/>
       </el-main>
     </el-container>
   </el-container>
@@ -115,7 +127,8 @@ const logout = () => {
       }
     }
   }
-  .body{
+
+  .body {
     .el-header {
       background-color: #fff;
       display: flex;
@@ -131,12 +144,13 @@ const logout = () => {
       .el-header-row {
         width: 400px;
 
-        .el-col{
+        .el-col {
           display: flex;
           align-items: center;
           justify-content: space-between;
         }
-        .header-img{
+
+        .header-img {
           width: 25px;
           height: 25px;
         }
